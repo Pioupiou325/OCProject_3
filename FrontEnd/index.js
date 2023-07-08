@@ -47,6 +47,7 @@ const barsetrestos = document.querySelector(".barsetrestos");
 
 tous.addEventListener("click", () =>{
    console.log("tous");
+   document.querySelector(".gallery").innerText="";
      // boucle pour chaque travail
      for (let i=0;i<response.length;i++){
       console.log(response[i].imageUrl);
@@ -84,6 +85,7 @@ tous.addEventListener("click", () =>{
 })
 objets.addEventListener("click",()=>{
    console.log("objets");
+   document.querySelector(".gallery").innerText="";
      // boucle pour chaque travail
      for (let i=0;i<response.length;i++){
       console.log(response[i].imageUrl);
@@ -121,6 +123,7 @@ objets.addEventListener("click",()=>{
 })
 appartements.addEventListener("click",()=>{
    console.log("appartements");
+   document.querySelector(".gallery").innerText="";
      // boucle pour chaque travail
      for (let i=0;i<response.length;i++){
       console.log(response[i].imageUrl);
@@ -158,6 +161,7 @@ appartements.addEventListener("click",()=>{
 })
 barsetrestos.addEventListener("click",()=>{
    console.log("barsetrestos");
+   document.querySelector(".gallery").innerText="";
      // boucle pour chaque travail
      for (let i=0;i<response.length;i++){
       console.log(response[i].imageUrl);

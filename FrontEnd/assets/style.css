@@ -264,27 +264,32 @@ footer nav ul {
 }
 
 /* rajout par moi-même au fichier de base */
-.filtres {
+
+.filters {
+  width: 100%;
+  margin-bottom: 30px;
+  display: none;
+}
+.show_filters {
   display: flex;
-  gap: 15px;
+}
+#filtres {
+  display: flex;
+  justify-content: center;
   margin-bottom: 20px;
   margin-left: 30px;
-
+  gap: 10px;
   width: 100%;
-  justify-content: center;
 }
 button {
   color: #1d6154;
   text-align: center;
   font-family: Syne;
   font-size: 1rem;
-  font-style: normal;
   font-weight: 700;
-  line-height: normal;
   border-radius: 3.75rem;
   border: 1px solid #1d6154;
-  width: 12.375rem;
-  height: 2.3125rem;
+  background-color: #fff;
 }
 button:hover {
   color: #fff;

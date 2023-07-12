@@ -48,7 +48,7 @@ fetch("http://localhost:5678/api/works")
     works = response;
 
     array_works = response;
-
+    show_images(array_works);
     //   IIIIIIIIIIIIIIIII
 
     tous.addEventListener("click", () => {

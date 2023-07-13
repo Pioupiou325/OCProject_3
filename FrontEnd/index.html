@@ -11,16 +11,31 @@
       rel="stylesheet"
     />
     <meta name="description" content="" />
+    <script
+      src="https://kit.fontawesome.com/05c4a4df46.js"
+      crossorigin="anonymous"
+    ></script>
     <link rel="stylesheet" href="./assets/style.css" />
   </head>
   <body>
+    <div class="bloc_mode_edition">
+      <i class="fa-light fa-pen-to-square"></i>
+      <p>Mode édition</p>
+      <button class="btn_mode_edition">publier les changements</button>
+    </div>
     <header>
-      <h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
+      <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
       <nav>
         <ul>
           <li>projets</li>
           <li>contact</li>
-          <li><a href="./login.html">login</a></li>
+          <div class="login_ok">
+            <li><a class="logout_ref" href="#">logout</a></li>
+          </div>
+          <div class="login_none">
+            <li><a href="./login.html">login</a></li>
+          </div>
+
           <li><img src="./assets/icons/instagram.png" alt="Instagram" /></li>
         </ul>
       </nav>
@@ -163,5 +178,6 @@
       </nav>
     </footer>
     <script src="./script.js" async></script>
+    <script src="./login.js" async></script>
   </body>
 </html>

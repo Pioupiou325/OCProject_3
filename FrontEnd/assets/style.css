@@ -271,7 +271,17 @@ footer nav ul {
 }
 
 /* rajout par moi-même au fichier de base */
-
+.bloc_mode_edition {
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  display: none;
+}
+.login_ok {
+  display: none;
+}
 .filters {
   width: 100%;
   margin-bottom: 30px;

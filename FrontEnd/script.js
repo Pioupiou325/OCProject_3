@@ -1,5 +1,21 @@
 let works;
 let array_works;
+const deco = document.querySelector(".login_ok");
+deco.addEventListener("clicked", () => {
+  sessionStorage.removeItem("token");
+  const affiche = document.querySelector(".bloc_mode_edition");
+  affiche.style.display = "none";
+  document.querySelector(".login_ok").style.display = "none";
+  document.querySelector(".login_none").style.display = "inline";
+
+  console.log("déco");
+});
+if (sessionStorage.getItem("token") != null) {
+  const affiche = document.querySelector(".bloc_mode_edition");
+  affiche.style.display = "flex";
+  document.querySelector(".login_ok").style.display = "inline";
+  document.querySelector(".login_none").style.display = "none";
+}
 
 // création des boutons de filtres
 const filters = document.createElement("div");
@@ -48,22 +64,25 @@ fetch("http://localhost:5678/api/works")
     works = response;
 
     array_works = response;
+    // chargement de la page d accueil avec tous les travaux de base
     show_images(array_works);
-    //   IIIIIIIIIIIIIIIII
 
+    // si le bouton Tous cliqué
     tous.addEventListener("click", () => {
       console.log("tous");
       document.querySelector(".gallery").innerText = "";
       // boucle pour chaque travail
       array_works = works;
+      // on envoie le tableau de base
       show_images(array_works);
     });
 
+    // si le bouton Objets cliqué
     objets.addEventListener("click", () => {
       console.log("objets");
       document.querySelector(".gallery").innerText = "";
       array_works = works;
-
+      // tri des works en catégorie objets (Category.Id=1)
       function filterByCategorie(element) {
         if (element.categoryId === 1) {
           return true;
@@ -72,13 +91,17 @@ fetch("http://localhost:5678/api/works")
           return false;
         }
       }
+      // on crée le tableau filtré par Objets
       array_works = works.filter(filterByCategorie);
+      // on affiche le tableau
       show_images(array_works);
     });
+
+    // si le bouton Appartements est cliqué
     appartements.addEventListener("click", () => {
       console.log("appartements");
       document.querySelector(".gallery").innerText = "";
-      // boucle pour chaque travail
+      // tri des works en catégorie Appart (Category.Id=2)
       function filterByCategorie(element) {
         if (element.categoryId === 2) {
           return true;
@@ -87,14 +110,17 @@ fetch("http://localhost:5678/api/works")
           return false;
         }
       }
+      // on crée le tableau filtré par Appart
       array_works = works.filter(filterByCategorie);
+      // on affiche le tableau
       show_images(array_works);
     });
 
+    // si le bouton hotels et restos est cliqué
     hotelsetrestos.addEventListener("click", () => {
       console.log("barsetrestos");
       document.querySelector(".gallery").innerText = "";
-      // boucle pour chaque travail
+      // tri des works en catégorie hotels et restos (CategoryId=3)
       function filterByCategorie(element) {
         if (element.categoryId === 3) {
           return true;
@@ -103,7 +129,9 @@ fetch("http://localhost:5678/api/works")
           return false;
         }
       }
+      // on créée le tableau filtré par hotels et restos
       array_works = works.filter(filterByCategorie);
+      // on affiche le tableau
       show_images(array_works);
     });
 

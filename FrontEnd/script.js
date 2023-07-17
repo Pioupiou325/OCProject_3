@@ -13,9 +13,13 @@ deco.addEventListener("clicked", () => {
 if (sessionStorage.getItem("token") != null) {
   const affiche = document.querySelector(".bloc_mode_edition");
   affiche.style.display = "flex";
+  const affiche2 = document.querySelector(".modifier_loginok");
+  affiche2.style.display = "flex";
   document.querySelector(".login_ok").style.display = "inline";
   document.querySelector(".login_none").style.display = "none";
-}
+
+  
+}else{
 
 // création des boutons de filtres
 const filters = document.createElement("div");
@@ -37,7 +41,7 @@ appartements.id = "appartements";
 appartements.innerText = "Appartements";
 const hotelsetrestos = document.createElement("button");
 hotelsetrestos.class = "filters-buttons";
-hotelsetrestos.id = "barsetrestos";
+hotelsetrestos.id = "hotelsetrestos";
 hotelsetrestos.innerText = "Hôtels et Restaurants";
 
 filters.appendChild(tous);
@@ -55,7 +59,8 @@ show_filters.classList.add("show_filters");
 const btn_tous = document.querySelector("#tous");
 const btn_objets = document.querySelector("#objets");
 const btn_appartements = document.querySelector("#appartements");
-const btn_barsetrestos = document.querySelector("#barsetrestos");
+const btn_hotelsetrestos = document.querySelector("#hotelsetrestos");
+}
 
 fetch("http://localhost:5678/api/works")
   .then((response) => response.json())
@@ -118,7 +123,7 @@ fetch("http://localhost:5678/api/works")
 
     // si le bouton hotels et restos est cliqué
     hotelsetrestos.addEventListener("click", () => {
-      console.log("barsetrestos");
+      console.log("hotelsetrestos");
       document.querySelector(".gallery").innerText = "";
       // tri des works en catégorie hotels et restos (CategoryId=3)
       function filterByCategorie(element) {

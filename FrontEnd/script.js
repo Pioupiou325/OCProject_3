@@ -1,27 +1,20 @@
 let works;
 let array_works;
-const deco = document.querySelector(".login_ok");
-deco.addEventListener("clicked", () => {
-  sessionStorage.removeItem("token");
-  const affiche = document.querySelector(".bloc_mode_edition");
-  affiche.style.display = "none";
-  document.querySelector(".login_ok").style.display = "none";
-  document.querySelector(".login_none").style.display = "inline";
 
-  console.log("déco");
-});
 if (sessionStorage.getItem("token") != null) {
   const affiche = document.querySelector(".bloc_mode_edition");
   affiche.style.display = "flex";
-  const affiche2 = document.querySelector(".modifier_loginok");
+  const affiche2 = document.querySelector(".afficher_modifier");
   affiche2.style.display = "flex";
   document.querySelector(".login_ok").style.display = "inline";
   document.querySelector(".login_none").style.display = "none";
+  
 
   
-}else{
+}
+else{
 
-// création des boutons de filtres
+// création des boutons de filtres si le token est absent
 const filters = document.createElement("div");
 filters.id = "filtres";
 
@@ -50,16 +43,11 @@ filters.appendChild(appartements);
 filters.appendChild(hotelsetrestos);
 
 document.querySelector(".filters").appendChild(filters);
-// document.querySelector("#portfolio").appendChild(filters);
+
 
 const show_filters = document.querySelector(".filters");
 show_filters.classList.add("show_filters");
 
-// prise en compte des 4 boutons pour écouter les évènements
-const btn_tous = document.querySelector("#tous");
-const btn_objets = document.querySelector("#objets");
-const btn_appartements = document.querySelector("#appartements");
-const btn_hotelsetrestos = document.querySelector("#hotelsetrestos");
 }
 
 fetch("http://localhost:5678/api/works")
@@ -71,11 +59,11 @@ fetch("http://localhost:5678/api/works")
     array_works = response;
     // chargement de la page d accueil avec tous les travaux de base
     show_images(array_works);
+  });
 
     // si le bouton Tous cliqué
     tous.addEventListener("click", () => {
-      console.log("tous");
-      document.querySelector(".gallery").innerText = "";
+          document.querySelector(".gallery").innerText = "";
       // boucle pour chaque travail
       array_works = works;
       // on envoie le tableau de base
@@ -164,5 +152,4 @@ fetch("http://localhost:5678/api/works")
 
         document.querySelector(".gallery").appendChild(figure);
       }
-    }
-  });
+    };

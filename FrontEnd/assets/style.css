@@ -282,6 +282,23 @@ footer nav ul {
   color: white;
   display: none;
   gap: 10px;
+  height: 59px;
+}
+.btn_mode_edition{
+
+text-align: center;
+font-family: Work Sans;
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+}
+.btn_mode_edition p{
+  font-family: Work Sans;
+
+font-style: normal;
+
+
 }
 .Title_modif {
   display: flex;
@@ -289,10 +306,11 @@ footer nav ul {
   align-items: center;
   gap: 10px;
 }
-.modifier_loginok {
+.afficher_modifier {
   display: flex;
   display: none;
   gap: 10px;
+  
 }
 .login_ok {
   display: none;
@@ -333,4 +351,9 @@ button:hover {
 /* IIIIIIIIIIIIIIIIIII               LOGIN.HTML                     IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII */
 .footer_login {
   margin-top: 420px;
+}
+
+.Title_modif {
+  gap: 20px;
+  margin-bottom: 50px;
 }

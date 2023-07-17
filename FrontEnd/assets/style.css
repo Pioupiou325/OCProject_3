@@ -284,33 +284,34 @@ footer nav ul {
   gap: 10px;
   height: 59px;
 }
-.btn_mode_edition{
-
-text-align: center;
-font-family: Work Sans;
-font-size: 14px;
-font-style: normal;
-font-weight: 500;
-line-height: normal;
-}
-.btn_mode_edition p{
+.btn_mode_edition {
+  text-align: center;
   font-family: Work Sans;
-
-font-style: normal;
-
-
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.btn_mode_edition p {
+  font-family: Work Sans;
+  font-style: normal;
 }
 .Title_modif {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
+  margin-bottom: 50px;
 }
+
 .afficher_modifier {
   display: flex;
   display: none;
   gap: 10px;
-  
+}
+.modif_photo_Sophie{
+  display: flex;
+  flex-direction: column;
 }
 .login_ok {
   display: none;
@@ -352,8 +353,8 @@ button:hover {
 .footer_login {
   margin-top: 420px;
 }
-
-.Title_modif {
-  gap: 20px;
-  margin-bottom: 50px;
+.erreur_identifiants{
+  display:none;
+  color:red;
+  justify-content: center;
 }

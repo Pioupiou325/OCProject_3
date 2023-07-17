@@ -15,27 +15,22 @@ form.addEventListener("submit", (event) => {
       password: user_pass.value,
     }),
   };
-  console.log(fetchData);
 
   fetch("http://localhost:5678/api/users/login", fetchData)
     .then(function (reponse) {
       if (!reponse.ok) {
-        throw new Error(
-          `erreur HTTP! ou identifient et/ou mot de passe incorrect statut: ${reponse.status}`
-        );
+        document.querySelector(".erreur_identifiants").style.display="flex";
+        throw new Error("identifient et/ou mot de passe incorrect");
       }
       return reponse.json();
     })
     .then(function (reponse) {
-      console.log(reponse.token);
       sessionStorage.setItem("token", reponse.token);
       sessionStorage.setItem("userId", reponse.userId);
 
       var token = sessionStorage.getItem("token");
       var userId = sessionStorage.getItem("userId");
 
-      console.log(token);
-      console.log(userId);
       document.location.href = "./index.html";
       const affiche = document.querySelector(".bloc_mode_edition");
       affiche.style.display = "flex";

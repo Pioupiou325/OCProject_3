@@ -316,18 +316,13 @@ footer nav ul {
 .login_ok {
   display: none;
 }
-.filters {
-  width: 100%;
-  margin-bottom: 30px;
-  display: none;
-}
 .show_filters {
   display: flex;
 }
 #filtres {
   display: flex;
   justify-content: center;
-  margin-bottom: 20px;
+  margin-bottom: 50px;
   margin-left: 30px;
   gap: 10px;
   width: 100%;

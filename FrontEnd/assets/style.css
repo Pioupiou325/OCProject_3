@@ -380,6 +380,7 @@ button:hover {
 }
 #modale h2{
   display:flex;
+  padding:20px;
   justify-content: center;
   margin-top: 30px;
   margin-bottom: 30px;
@@ -413,6 +414,18 @@ button:hover {
   font-weight: 400;
   font-size: 14px;
   position:relative;
-  top:77%;
+  top:75%;
   left:2%;
+}
+#modale_gallery{
+  position:absolute;
+  padding-left: 60px;
+  width: 80%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-column-gap: 10px;
+  grid-row-gap: 15px;
+}
+#modale_gallery img{
+  width:100%;
 }

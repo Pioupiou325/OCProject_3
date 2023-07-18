@@ -126,6 +126,7 @@ function modale_start() {
   title.innerHTML = "Galerie photo";
   document.getElementById("modale").appendChild(title);
   const modale_gallery = document.createElement("div");
+  modale_gallery.id = "modale_gallery";
   document.getElementById("modale").appendChild(modale_gallery);
 
   const btn_modale_Ajouter_photo = document.createElement("button");
@@ -137,6 +138,24 @@ function modale_start() {
   modale_delete_all.innerText = "Supprimer la galerie";
   modale_delete_all.id = "modale_delete_All";
   document.getElementById("modale").appendChild(modale_delete_all);
+
+  for (let i = 0; i < works.length; i++) {
+    // crée une div figure
+    const figure = document.createElement("figure");
+    // cree la div image
+    const image = document.createElement("img");
+    // indique la source de l image
+    image.src = works[i].imageUrl;
+    // crée la div paragraphe pour le titre de la photo
+    const title = document.createElement("p");
+    // indique le titre de la photo
+    title.innerText = "éditer";
+    //   inclut les 2 enfants image+titre dans la div figure
+    figure.appendChild(image);
+    figure.appendChild(title);
+    //   inclut l' enfant figure dans la div gallery
+    document.getElementById("modale_gallery").appendChild(figure);
+  }
 
 
 

@@ -40,7 +40,7 @@ function mode_edition() {
   document.querySelector(".login_ok").style.display = "inline";
   document.querySelector(".login_none").style.display = "none";
   afficher_modifier.addEventListener("click", () => {
-    console.log("modale à lancer");
+    modale_start();
   });
   document.getElementById("login_ok").addEventListener("click", () => {
     mode_deconnect();
@@ -118,7 +118,32 @@ function show_filters() {
   show_filters.classList.add("show_filters");
 }
 
+function modale_start() {
+  document.getElementById("overlay").style.display = "block";
+  document.getElementById("modale").style.display = "block";
+  
+  const title = document.createElement("h2");
+  title.innerHTML = "Galerie photo";
+  document.getElementById("modale").appendChild(title);
+  const modale_gallery = document.createElement("div");
+  document.getElementById("modale").appendChild(modale_gallery);
 
+  const btn_modale_Ajouter_photo = document.createElement("button");
+  btn_modale_Ajouter_photo.id = "btn_Ajouter";
+  btn_modale_Ajouter_photo.innerHTML = "Ajouter une photo";
+  document.getElementById("modale").appendChild(btn_modale_Ajouter_photo);
+
+  const modale_delete_all = document.createElement("a");
+  modale_delete_all.innerText = "Supprimer la galerie";
+  modale_delete_all.id = "modale_delete_All";
+  document.getElementById("modale").appendChild(modale_delete_all);
+
+
+
+
+
+
+}
 //   IIIIIIIIIIIIIIi
 
 // show_images(array_works);

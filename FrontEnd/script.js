@@ -136,8 +136,8 @@ function modale_start() {
   document.getElementById("modale").appendChild(modale_delete_all);
 
   const barre = document.createElement("div");
-    barre.id="barre";
-    document.getElementById("modale").appendChild(barre);
+  barre.id = "barre";
+  document.getElementById("modale").appendChild(barre);
 
   // affichage des works dans la modale
   for (let i = 0; i < works.length; i++) {
@@ -155,17 +155,21 @@ function modale_start() {
     figure.appendChild(image);
     figure.appendChild(title);
 
+    const container_trash = document.createElement("div");
+    container_trash.id = "container_trash";
 
-    const container_trash=document.createElement("div")
-    container_trash.id="container_trash";
     const trash = document.createElement("i");
-    trash.innerHTML='<i class="fa-solid fa-trash-can" </i>';
-    trash.class="trash";
-    trash.id=works[i].id;
+    trash.innerHTML = '<i class="fa-solid fa-trash-can" </i>';
+    trash.class = "trash";
+    trash.id = works[i].id;
+    
 
-      container_trash.appendChild(trash); 
+    container_trash.appendChild(trash);
     figure.appendChild(container_trash);
-  
+    trash.addEventListener("click", () => {
+      console.log(trash.id);
+    });
+
     //   inclut l' enfant figure dans la div gallery
     document.getElementById("modale_gallery").appendChild(figure);
   }
@@ -203,7 +207,7 @@ function modale_start() {
 
     const label_Title_TEXT = document.createElement("p");
     label_Title_TEXT.innerText = "Titre";
-    label_Title_TEXT.id="label_Title_TEXT";
+    label_Title_TEXT.id = "label_Title_TEXT";
     document.getElementById("modale").appendChild(label_Title_TEXT);
     const label_Title = document.createElement("input");
     label_Title.label = "Titre";
@@ -213,7 +217,7 @@ function modale_start() {
 
     const label_Categorie_TEXT = document.createElement("p");
     label_Categorie_TEXT.innerText = "Catégories";
-    label_Categorie_TEXT.id="label_Categorie_TEXT";
+    label_Categorie_TEXT.id = "label_Categorie_TEXT";
     document.getElementById("modale").appendChild(label_Categorie_TEXT);
     const label_Categorie = document.createElement("input");
     label_Categorie.label = "Catégorie";
@@ -222,9 +226,8 @@ function modale_start() {
     document.getElementById("modale").appendChild(label_Categorie);
 
     const barre = document.createElement("div");
-    barre.id="barre";
+    barre.id = "barre";
     document.getElementById("modale").appendChild(barre);
-
   }
 }
 //   IIIIIIIIIIIIIIi

@@ -204,15 +204,15 @@ function modale_start() {
       console.error(error);
     });
 
-    modale_croix_close.addEventListener("click", () => {
-      close_modale();
-    });
+   
     // overlay.addEventListener("click", ()=>{
     //   close_modale();
     // })
   });
   }
-
+  modale_croix_close.addEventListener("click", () => {
+    close_modale();
+  });
   btn_Ajouter.addEventListener("click", () => {
     modale_Ajouter();
   });

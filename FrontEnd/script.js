@@ -177,11 +177,40 @@ function modale_start() {
 
     trash.addEventListener("click", () => {
       console.log(trash.id);
+      let token = sessionStorage.getItem("token");
+       token = token.toString();
+      let Data = {
+        method: "DELETE",
+        headers: {
+          Accept: "*/*",
+          Authorization:'Bearer ' + sessionStorage.getItem("token"),
+        }
+      };
+    
+    
+    fetch("http://localhost:5678/api/works/"+trash.id, Data)
+    .then(function (reponse) {
+      if (!reponse.ok) {
+        
+        throw new Error(error);
+      }
+      return reponse;
+    })
+    .then(function (reponse) {
+      reponse;
+      console.log("OK");
+    })
+    .catch((error) => {
+      console.error(error);
     });
 
-    modale_croix_close.addEventListener("click", ()=>{
+    modale_croix_close.addEventListener("click", () => {
       close_modale();
-    })
+    });
+    // overlay.addEventListener("click", ()=>{
+    //   close_modale();
+    // })
+  });
   }
 
   btn_Ajouter.addEventListener("click", () => {
@@ -245,28 +274,42 @@ function modale_start() {
     label_Categorie_TEXT.innerText = "Catégories";
     label_Categorie_TEXT.id = "label_Categorie_TEXT";
     document.getElementById("modale").appendChild(label_Categorie_TEXT);
+
+    const form_categories = document.createElement("form");
+    form_categories.id = "form_categories";
     const label_Categorie = document.createElement("input");
     label_Categorie.label = "Catégorie";
     label_Categorie.title = "Catégorie";
     label_Categorie.id = "label_Catégorie";
-    document.getElementById("modale").appendChild(label_Categorie);
+
+    //  créations des options value = catégopries
+    for (i = 0; i < array_categories.length; i++) {
+      const option_categories = document.createElement("option");
+      option_categories.value = array_categories[i].name;
+      console.log(option_categories.value);
+
+      // label_Catégorie.appenchild(option_categories);
+    }
+
+    form_categories.appendChild(label_Categorie);
+    document.getElementById("modale").appendChild(form_categories);
 
     const barre = document.createElement("div");
     barre.id = "barre";
     document.getElementById("modale").appendChild(barre);
 
-    modale_croix_close.addEventListener("click", ()=>{
+    modale_croix_close.addEventListener("click", () => {
       close_modale();
-    })
+    });
 
     modale_fleche_retour.addEventListener("click", () => {
       modale_start();
     });
   }
 }
-function close_modale(){
+function close_modale() {
   document.getElementById("overlay").style.display = "none";
-document.getElementById("modale").style.display = "none";
+  document.getElementById("modale").style.display = "none";
 }
 //   IIIIIIIIIIIIIIi
 

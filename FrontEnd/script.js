@@ -138,7 +138,7 @@ function modale_start() {
   modale_delete_all.innerText = "Supprimer la galerie";
   modale_delete_all.id = "modale_delete_All";
   document.getElementById("modale").appendChild(modale_delete_all);
-
+// affichage des works dans la modale
   for (let i = 0; i < works.length; i++) {
     // crée une div figure
     const figure = document.createElement("figure");
@@ -153,6 +153,12 @@ function modale_start() {
     //   inclut les 2 enfants image+titre dans la div figure
     figure.appendChild(image);
     figure.appendChild(title);
+    const trash = document.createElement("i");
+    trash.class="fa-solid fa-trash-can";
+    trash.id="fa-solid fa-trash-can";
+    trash.class="fa-solid fa-trash-can";
+    figure.appendChild(trash);
+    // <i class="fa-solid fa-trash-can"></i>
     //   inclut l' enfant figure dans la div gallery
     document.getElementById("modale_gallery").appendChild(figure);
   }
@@ -160,7 +166,9 @@ function modale_start() {
 
 
 
-
+  btn_Ajouter.addEventListener("click",()=>{
+    document.getElementById("modale").innerText = "";
+  })
 
 }
 //   IIIIIIIIIIIIIIi

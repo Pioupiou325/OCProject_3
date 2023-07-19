@@ -400,7 +400,7 @@ button:hover {
 }
 #btn_Ajouter{
   position:relative;
-  top:70%;
+  top:69%;
   left:33%;
   background-color: #1d6154;
   color: #FFF;
@@ -414,7 +414,7 @@ button:hover {
   font-weight: 400;
   font-size: 14px;
   position:relative;
-  top:75%;
+  top:74%;
   left:2%;
 }
 #modale_gallery{

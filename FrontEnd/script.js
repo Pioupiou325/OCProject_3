@@ -115,8 +115,14 @@ function show_filters() {
 }
 // page 1 modale
 function modale_start() {
+  document.getElementById("modale").innerText = "";
   document.getElementById("overlay").style.display = "block";
   document.getElementById("modale").style.display = "block";
+
+  const modale_croix_close = document.createElement("i");
+  modale_croix_close.innerHTML = '<i class="fa-solid fa-xmark" </i>';
+  modale_croix_close.id = "modale_croix_close";
+  document.getElementById("modale").appendChild(modale_croix_close);
 
   const title = document.createElement("h2");
   title.innerHTML = "Galerie photo";
@@ -162,16 +168,20 @@ function modale_start() {
     trash.innerHTML = '<i class="fa-solid fa-trash-can" </i>';
     trash.class = "trash";
     trash.id = works[i].id;
-    
 
     container_trash.appendChild(trash);
     figure.appendChild(container_trash);
+
+    //   inclut l' enfant figure dans la div gallery
+    document.getElementById("modale_gallery").appendChild(figure);
+
     trash.addEventListener("click", () => {
       console.log(trash.id);
     });
 
-    //   inclut l' enfant figure dans la div gallery
-    document.getElementById("modale_gallery").appendChild(figure);
+    modale_croix_close.addEventListener("click", ()=>{
+      close_modale();
+    })
   }
 
   btn_Ajouter.addEventListener("click", () => {
@@ -181,12 +191,28 @@ function modale_start() {
   // page 2 modale
   function modale_Ajouter() {
     document.getElementById("modale").innerText = "";
+
+    const modale_croix_close = document.createElement("i");
+    modale_croix_close.innerHTML = '<i class="fa-solid fa-xmark" </i>';
+    modale_croix_close.id = "modale_croix_close";
+    document.getElementById("modale").appendChild(modale_croix_close);
+
+    const modale_fleche_retour = document.createElement("i");
+    modale_fleche_retour.innerHTML = '<i class="fa-solid fa-arrow-left" </i>';
+    modale_fleche_retour.id = "modale_fleche_retour";
+    document.getElementById("modale").appendChild(modale_fleche_retour);
+
     const title = document.createElement("h2");
     title.innerText = "Ajout photo";
     document.getElementById("modale").appendChild(title);
     const Ajouter_Photo_Part = document.createElement("div");
     Ajouter_Photo_Part.id = "Ajouter_Photo_Part";
     document.getElementById("modale").appendChild(Ajouter_Photo_Part);
+
+    const modale_picture = document.createElement("i");
+    modale_picture.innerHTML = '<i class="fa-solid fa-image" </i>';
+    modale_picture.id = "modale_picture";
+    document.getElementById("modale").appendChild(modale_picture);
 
     const btn_Ajouter_photo = document.createElement("button");
     btn_Ajouter_photo.id = "btn_Ajouter_photo";
@@ -228,7 +254,19 @@ function modale_start() {
     const barre = document.createElement("div");
     barre.id = "barre";
     document.getElementById("modale").appendChild(barre);
+
+    modale_croix_close.addEventListener("click", ()=>{
+      close_modale();
+    })
+
+    modale_fleche_retour.addEventListener("click", () => {
+      modale_start();
+    });
   }
+}
+function close_modale(){
+  document.getElementById("overlay").style.display = "none";
+document.getElementById("modale").style.display = "none";
 }
 //   IIIIIIIIIIIIIIi
 

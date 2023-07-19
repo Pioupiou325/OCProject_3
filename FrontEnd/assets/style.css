@@ -385,14 +385,13 @@ button:hover {
 }
 #modale_croix_close {
   position: absolute;
-  right: 10px;
-  top: 10px;
+  right: 24px;
+  top: 24px;
 }
 #modale_fleche_retour {
-  display: none;
-  position: absolute;
-  left: 10px;
-  top: 10px;
+    position: absolute;
+  left: 24px;
+  top: 24px;
 }
 #btn_Ajouter {
   position: relative;
@@ -431,6 +430,13 @@ button:hover {
   background-color: #e8f1f6;
   position: absolute;
   left: 17%;
+}
+#modale_picture{
+  position: absolute;
+  top:151px;
+  left:283px;
+  font-size:4em;
+ color:#B9C5CC;
 }
 #btn_Ajouter_photo {
   position: absolute;

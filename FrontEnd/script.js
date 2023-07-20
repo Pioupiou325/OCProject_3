@@ -1,4 +1,4 @@
-var delete_in_progress = 0;
+var delete_in_progress = 0; /* pour relancer la modale après un DELETE pour forcer le reload de l affichage*/
 var array_categories;
 let array_works;
 function fetch_works() {
@@ -6,27 +6,16 @@ function fetch_works() {
     .then((response) => response.json())
     .then((response) => {
       works = response;
-      array_works = response;
-
       show_images(works);
-
       modale_start();
       close_modale();
     })
     .catch((error) => {
       console.log(error);
     });
-
   return;
 }
-function fetch_categories() {
-  fetch("http://localhost:5678/api/categories")
-    .then((reponse) => reponse.json())
-    .then((reponse) => {
-      array_categories = reponse;
-      return array_categories;
-    });
-}
+// fonction pour effacer un work
 function fetch_delete(id) {
   let Data = {
     method: "DELETE",
@@ -46,27 +35,21 @@ function fetch_delete(id) {
       console.log("OK");
     });
 }
-
+// fonction affichage images galerie principale
 function show_images(tab) {
   document.querySelector(".gallery").innerHTML = "";
   for (let i = 0; i < tab.length; i++) {
-    // crée une div figure
     const figure = document.createElement("figure");
-    // cree la div image
     const image = document.createElement("img");
-    // indique la source de l image
     image.src = tab[i].imageUrl;
-    // crée la div paragraphe pour le titre de la photo
     const title = document.createElement("p");
-    // indique le titre de la photo
     title.innerText = tab[i].title;
-    //   inclut les 2 enfants image+titre dans la div figure
     figure.appendChild(image);
     figure.appendChild(title);
-    //   inclut l' enfant figure dans la div gallery
     document.querySelector(".gallery").appendChild(figure);
   }
 }
+// fonction mode edition quand login OK
 function mode_edition() {
   document.getElementById("filtres").style.display = "none";
   const affiche = document.querySelector(".bloc_mode_edition");
@@ -82,12 +65,11 @@ function mode_edition() {
     mode_deconnect();
   });
 }
-
+// fonction deconnexion et donc suppression du token
 function mode_deconnect() {
   sessionStorage.removeItem("token");
   sessionStorage.removeItem("userId");
   document.getElementById("filtres").style.display = "flex";
-  // create_boutons_filters(array_categories);
   const affiche = document.querySelector(".bloc_mode_edition");
   affiche.style.display = "none";
   const affiche2 = document.querySelector(".afficher_modifier");
@@ -98,7 +80,7 @@ function mode_deconnect() {
 
 // fonction de creation des boutons suivant le tableau categories
 function create_boutons_filters() {
-  // bouton pour toutes les catégories
+  // bouton pour le bouton Tous (toutes les images de toutes les catégories)
   const filters = document.getElementById("filtres");
   const tous = document.createElement("button");
   tous.class = "filters-buttons";
@@ -115,9 +97,6 @@ function create_boutons_filters() {
     .then((reponse) => {
       categories = reponse;
       array_categories = reponse;
-
-      // array_categories=fetch_categories();
-      console.log(array_categories);
       for (let i = 0; i < array_categories.length; i++) {
         const btn_filter = document.createElement("button");
         btn_filter.class = "filters-buttons";
@@ -153,73 +132,67 @@ function show_filters() {
 }
 // page 1 modale
 function modale_start() {
-  console.log(works);
   document.getElementById("modale").innerText = "";
-
   document.getElementById("overlay").style.display = "block";
   document.getElementById("modale").style.display = "block";
-
   const modale_croix_close = document.createElement("i");
   modale_croix_close.innerHTML = '<i class="fa-solid fa-xmark" </i>';
   modale_croix_close.id = "modale_croix_close";
   document.getElementById("modale").appendChild(modale_croix_close);
-
   const title = document.createElement("h2");
   title.innerHTML = "Galerie photo";
   document.getElementById("modale").appendChild(title);
   const modale_gallery = document.createElement("div");
   modale_gallery.id = "modale_gallery";
   document.getElementById("modale").appendChild(modale_gallery);
-
   const btn_modale_Ajouter_photo = document.createElement("button");
   btn_modale_Ajouter_photo.id = "btn_Ajouter";
   btn_modale_Ajouter_photo.innerHTML = "Ajouter une photo";
   document.getElementById("modale").appendChild(btn_modale_Ajouter_photo);
-
   const modale_delete_all = document.createElement("a");
   modale_delete_all.innerText = "Supprimer la galerie";
   modale_delete_all.id = "modale_delete_All";
   document.getElementById("modale").appendChild(modale_delete_all);
-
   const barre = document.createElement("div");
   barre.id = "barre";
   document.getElementById("modale").appendChild(barre);
-
   // affichage des works dans la modale
   for (let i = 0; i < works.length; i++) {
-    // crée une div figure
     const figure = document.createElement("figure");
-    // cree la div image
     const image = document.createElement("img");
-    // indique la source de l image
     image.src = works[i].imageUrl;
-    // crée la div paragraphe pour le titre de la photo
-    const title = document.createElement("p");
-    // indique le titre de la photo
-    title.innerText = "éditer";
+    const subtitle = document.createElement("p");
+    subtitle.innerText = "éditer";
     //   inclut les 2 enfants image+titre dans la div figure
     figure.appendChild(image);
-    figure.appendChild(title);
-
+    figure.appendChild(subtitle);
     const container_trash = document.createElement("div");
     container_trash.id = "container_trash";
-
     const trash = document.createElement("i");
     trash.innerHTML = '<i class="fa-solid fa-trash-can" </i>';
     trash.class = "trash";
     trash.id = works[i].id;
-
     container_trash.appendChild(trash);
     figure.appendChild(container_trash);
-
     //   inclut l' enfant figure dans la div gallery
     document.getElementById("modale_gallery").appendChild(figure);
-
+    // ajoute un eventListener sur chaque trash
     trash.addEventListener("click", () => {
       delete_in_progress = 1;
       fetch_delete(trash.id);
       fetch_works();
       show_images(works);
+    });
+    // supprimer toutes les images de la galerie
+    modale_delete_all.addEventListener("click", () => {
+      works.forEach((element) => {
+        
+        fetch_delete(element.id);
+      });
+      delete_in_progress = 1;
+      fetch_works();
+      show_images(works);
+      modale_start();
     });
 
     // overlay.addEventListener("click", ()=>{
@@ -236,29 +209,24 @@ function modale_start() {
   // page 2 modale
   function modale_Ajouter() {
     document.getElementById("modale").innerText = "";
-
     const modale_croix_close = document.createElement("i");
     modale_croix_close.innerHTML = '<i class="fa-solid fa-xmark" </i>';
     modale_croix_close.id = "modale_croix_close";
     document.getElementById("modale").appendChild(modale_croix_close);
-
     const modale_fleche_retour = document.createElement("i");
     modale_fleche_retour.innerHTML = '<i class="fa-solid fa-arrow-left" </i>';
     modale_fleche_retour.id = "modale_fleche_retour";
     document.getElementById("modale").appendChild(modale_fleche_retour);
-
     const title = document.createElement("h2");
     title.innerText = "Ajout photo";
     document.getElementById("modale").appendChild(title);
     const Ajouter_Photo_Part = document.createElement("div");
     Ajouter_Photo_Part.id = "Ajouter_Photo_Part";
     document.getElementById("modale").appendChild(Ajouter_Photo_Part);
-
     const modale_picture = document.createElement("i");
     modale_picture.innerHTML = '<i class="fa-solid fa-image" </i>';
     modale_picture.id = "modale_picture";
     document.getElementById("modale").appendChild(modale_picture);
-
     const btn_Ajouter_photo = document.createElement("button");
     btn_Ajouter_photo.id = "btn_Ajouter_photo";
     btn_Ajouter_photo.innerHTML = "+ Ajouter photo";
@@ -323,8 +291,8 @@ function modale_start() {
     });
   }
 }
+// fermeture de la modale
 function close_modale() {
-  
   document.getElementById("overlay").style.display = "none";
   document.getElementById("modale").style.display = "none";
   if (delete_in_progress === 1) {
@@ -332,9 +300,7 @@ function close_modale() {
     modale_start();
   }
 }
-//   IIIIIIIIIIIIIIi
 
-// show_images(array_works);
 fetch_works();
 create_boutons_filters();
 show_filters();

@@ -1,29 +1,31 @@
-
-let array_works
+var delete_in_progress = 0;
+var array_categories;
+let array_works;
 function fetch_works() {
   fetch("http://localhost:5678/api/works")
     .then((response) => response.json())
     .then((response) => {
       works = response;
       array_works = response;
-      
+
       show_images(works);
+
+      modale_start();
+      close_modale();
     })
     .catch((error) => {
       console.log(error);
     });
-    
-    return;
+
+  return;
 }
 function fetch_categories() {
   fetch("http://localhost:5678/api/categories")
     .then((reponse) => reponse.json())
     .then((reponse) => {
-      let categories = reponse;
       array_categories = reponse;
-      return categories;
+      return array_categories;
     });
-    
 }
 function fetch_delete(id) {
   let Data = {
@@ -38,7 +40,6 @@ function fetch_delete(id) {
       if (!reponse.ok) {
         throw new Error(error);
       }
-      return reponse;
     })
     .then(function (reponse) {
       reponse;
@@ -114,35 +115,35 @@ function create_boutons_filters() {
     .then((reponse) => {
       categories = reponse;
       array_categories = reponse;
-     
-    
-  console.log(array_categories);
-  for (let i = 0; i < array_categories.length; i++) {
-    const btn_filter = document.createElement("button");
-    btn_filter.class = "filters-buttons";
-    btn_filter.id = array_categories[i].name;
-    btn_filter.innerText = array_categories[i].name;
-    filters.appendChild(btn_filter);
-    btn_filter.addEventListener("click", () => {
-      console.log(filters.id);
-      document.querySelector(".gallery").innerText = "";
-      array_works = works;
-      // tri des works par catégorie
-      function filterByCategorie(element) {
-        if (element.category.name === btn_filter.id) {
-          return true;
-        } else {
-          console.log(element.category.name);
-          return false;
-        }
+
+      // array_categories=fetch_categories();
+      console.log(array_categories);
+      for (let i = 0; i < array_categories.length; i++) {
+        const btn_filter = document.createElement("button");
+        btn_filter.class = "filters-buttons";
+        btn_filter.id = array_categories[i].name;
+        btn_filter.innerText = array_categories[i].name;
+        filters.appendChild(btn_filter);
+        btn_filter.addEventListener("click", () => {
+          console.log(filters.id);
+          document.querySelector(".gallery").innerText = "";
+          array_works = works;
+          // tri des works par catégorie
+          function filterByCategorie(element) {
+            if (element.category.name === btn_filter.id) {
+              return true;
+            } else {
+              console.log(element.category.name);
+              return false;
+            }
+          }
+          // on crée le tableau filtré par Objets
+          array_works = works.filter(filterByCategorie);
+          // on affiche le tableau
+          show_images(array_works);
+        });
       }
-      // on crée le tableau filtré par Objets
-      array_works = works.filter(filterByCategorie);
-      // on affiche le tableau
-      show_images(array_works);
     });
-  }
-});
 }
 
 // fonction pour afficher les filtres
@@ -215,10 +216,10 @@ function modale_start() {
     document.getElementById("modale_gallery").appendChild(figure);
 
     trash.addEventListener("click", () => {
+      delete_in_progress = 1;
       fetch_delete(trash.id);
       fetch_works();
       show_images(works);
-      modale_start();
     });
 
     // overlay.addEventListener("click", ()=>{
@@ -323,9 +324,13 @@ function modale_start() {
   }
 }
 function close_modale() {
-  document.getElementById("modale_gallery").style.display = "none";
+  
   document.getElementById("overlay").style.display = "none";
   document.getElementById("modale").style.display = "none";
+  if (delete_in_progress === 1) {
+    delete_in_progress = 0;
+    modale_start();
+  }
 }
 //   IIIIIIIIIIIIIIi
 

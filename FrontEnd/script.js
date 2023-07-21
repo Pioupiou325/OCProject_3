@@ -8,7 +8,7 @@ function fetch_works() {
       works = response;
       show_images(works);
       modale_start();
-      close_modale();
+      if (delete_in_progress != 1) { close_modale(); }
     })
     .catch((error) => {
       console.log(error);
@@ -33,6 +33,7 @@ function fetch_delete(id) {
     .then(function (reponse) {
       reponse;
       console.log("OK");
+             return;
     });
 }
 // fonction affichage images galerie principale
@@ -189,10 +190,11 @@ function modale_start() {
         
         fetch_delete(element.id);
       });
+      modale_gallery.innerText = " ";
       delete_in_progress = 1;
       fetch_works();
-      show_images(works);
-      modale_start();
+      
+      
     });
 
     // overlay.addEventListener("click", ()=>{

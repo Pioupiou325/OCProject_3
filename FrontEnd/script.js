@@ -185,7 +185,7 @@ function modale_start() {
   btn_modale_Ajouter_photo.innerHTML = "Ajouter une photo";
   document.getElementById("modale").appendChild(btn_modale_Ajouter_photo);
   const modale_delete_all = document.createElement("a");
-  modale_delete_all.href="#";
+  modale_delete_all.href = "#";
   modale_delete_all.innerText = "Supprimer la galerie";
   modale_delete_all.id = "modale_delete_All";
   document.getElementById("modale").appendChild(modale_delete_all);
@@ -235,12 +235,10 @@ function modale_start() {
     modale_picture.innerHTML = '<i class="fa-solid fa-image" </i>';
     modale_picture.id = "modale_picture";
     document.getElementById("modale").appendChild(modale_picture);
-    const btn_Ajouter_photo = document.createElement("button");
-    btn_Ajouter_photo.id = "btn_Ajouter_photo";
-    btn_Ajouter_photo.innerHTML = "+ Ajouter photo";
-    document
-      .getElementById("Ajouter_Photo_Part")
-      .appendChild(btn_Ajouter_photo);
+
+    // document
+    //   .getElementById("Ajouter_Photo_Part")
+    //   .appendChild(btn_Ajouter_photo);
 
     const explication = document.createElement("p");
     explication.innerText = "jpg, png : 4mo max";
@@ -252,39 +250,59 @@ function modale_start() {
     btn_Valider_Ajouter_photo.innerHTML = "Valider";
     document.getElementById("modale").appendChild(btn_Valider_Ajouter_photo);
 
-    const label_Title_TEXT = document.createElement("p");
-    label_Title_TEXT.innerText = "Titre";
-    label_Title_TEXT.id = "label_Title_TEXT";
-    document.getElementById("modale").appendChild(label_Title_TEXT);
-    const label_Title = document.createElement("input");
-    label_Title.label = "Titre";
-    label_Title.title = "Titre";
-    label_Title.id = "label_Title";
-    document.getElementById("modale").appendChild(label_Title);
+    // IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIdebut formIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+    const form_ajout_photo = document.createElement("form");
+    form_ajout_photo.id = "form_categories";
 
-    const label_Categorie_TEXT = document.createElement("p");
-    label_Categorie_TEXT.innerText = "Catégories";
-    label_Categorie_TEXT.id = "label_Categorie_TEXT";
-    document.getElementById("modale").appendChild(label_Categorie_TEXT);
+    const btn_Ajouter_photo = document.createElement("input");
+    btn_Ajouter_photo.id = "btn_Ajouter_photo";
+    btn_Ajouter_photo.innertext = "+ Ajouter photo";
+    btn_Ajouter_photo.setAttribute("accept", "image/png, image/jpeg");
+    btn_Ajouter_photo.setAttribute("type", "file");
 
-    const form_categories = document.createElement("form");
-    form_categories.id = "form_categories";
-    const label_Categorie = document.createElement("input");
-    label_Categorie.label = "Catégorie";
-    label_Categorie.title = "Catégorie";
-    label_Categorie.id = "label_Catégorie";
+    document.getElementById("modale").appendChild(form_ajout_photo);
+
+    label_title = document.createElement("label");
+    label_title.setAttribute("for","input_Title")
+    label_title.id="label_title";
+    label_title.innerText="Titre";
+
+    const input_Title = document.createElement("input");
+    input_Title.setAttribute("type", "text");
+    input_Title.setAttribute("name", "Title");
+    input_Title.setAttribute("for", "nombre");
+    input_Title.id = "input_Title";
+    form_categories.appendChild(label_title);
+    form_categories.appendChild(input_Title);
+    form_categories.appendChild(btn_Ajouter_photo);
+   
+
+    // const label_ajout_photo = document.createElement("button");
+    // label_ajout_photo.id="Masque_btn_Ajouter_photo";
+    // label_ajout_photo.innerHTML="+ Ajouter photo";
+    // form_categories.appendChild(label_ajout_photo);
+
+    const label_Categorie = document.createElement("label");
+    // label_Categorie.id = "label_Catégorie";
+    label_Categorie.setAttribute("for", "select_categories");
+    label_Categorie.setAttribute("class", "label_Categorie");
+    label_Categorie.innerText = "Catégories";
+
+    form_categories.appendChild(label_Categorie);
+
+    const select_categories = document.createElement("select");
+    select_categories.id = "select_categories";
+    select_categories.setAttribute("value", " ");
+    select_categories.innerText = " ";
+    form_categories.appendChild(select_categories);
 
     //  créations des options value = catégopries
     for (i = 0; i < array_categories.length; i++) {
       const option_categories = document.createElement("option");
-      option_categories.value = array_categories[i].name;
-      console.log(option_categories.value);
-
-      // label_Catégorie.appenchild(option_categories);
+      option_categories.setAttribute("value", array_categories[i].name);
+      option_categories.innerText = array_categories[i].name;
+      select_categories.appendChild(option_categories);
     }
-
-    form_categories.appendChild(label_Categorie);
-    document.getElementById("modale").appendChild(form_categories);
 
     const barre = document.createElement("div");
     barre.id = "barre";

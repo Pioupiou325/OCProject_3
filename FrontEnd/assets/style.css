@@ -454,19 +454,22 @@ button:hover {
   color: #b9c5cc;
 }
 #btn_Ajouter_photo {
+  /* opacity: 0.5; */
+  border-radius: 50px;
   position: absolute;
-  top: 60%;
-  left: 30%;
+  width: 114px;
+  top: -45%;
+  left: 36%;
   color: #306685;
   background-color: #cbd6dc;
   font-family: Work Sans;
-  font-size: 14px;
+  font-size: 27px;
   padding-left: 30px;
   padding-right: 30px;
 }
 #explication {
   position: absolute;
-  top: 87%;
+  top: 84%;
   left: 39%;
   color: #444;
   font-family: Work Sans;
@@ -486,54 +489,57 @@ button:hover {
   padding-left: 90px;
   padding-right: 90px;
 }
-#label_Title {
-  position: relative;
-  color: #444;
-  font-family: Work Sans;
-  font-size: 14px;
-  width: 420px;
-  margin: 2em auto;
-  height: 50px;
-  font-size: 1.2em;
-  border: none;
-  box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
-  top: 24%;
-  left: 17%;
-}
-#label_Catégorie {
-  position: relative;
-  color: #444;
-  font-family: Work Sans;
-  font-size: 14px;
-  width: 420px;
-  margin: 2em auto;
-  height: 50px;
-  font-size: 1.2em;
-  border: none;
-  box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
-  top: 24%;
-  left: 17%;
-}
-#label_Title_TEXT {
+#label_title {
   position: absolute;
-  top: 352px;
-  left: 106px;
-  color: #3d3d3d;
+  left: 17%;
+  top: 5%;
+  font-size: 14px;
+  color: #444;
+  font-weight: bold;
+  font-family: Work Sans;
+}
+#input_Title {
+  position: relative;
+  color: #444;
   font-family: Work Sans;
   font-size: 14px;
+  width: 420px;
+  margin: 2em auto;
+  height: 50px; 
+  border: none;
+  box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
+  top: 24%;
+  left: 17%;
 }
+.label_Categorie {
+  position: absolute;
+  color: #444;
+  font-weight: bold;
+  font-family: Work Sans;
+  font-size: 14px;
+  top: 54%;
+  left: 17%;
+}
+#select_categories {
+  position: relative;
+  color: #444;
+  font-family: Work Sans;
+  font-size: 14px;
+  width: 420px;
+  margin: 2em auto;
+  height: 50px;
+  font-size: 14px;
+  border: none;
+  box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
+  top: 24%;
+  left: 17%;
+}
+
 #form_categories {
   position: relative;
   top: 24%;
 }
-#label_Categorie_TEXT {
-  position: absolute;
-  top: 484px;
-  left: 106px;
-  color: #3d3d3d;
-  font-family: Work Sans;
-  font-size: 14px;
-}
+
 #barre {
   position: absolute;
   width: 420px;
@@ -555,4 +561,19 @@ button:hover {
   top: 3px;
   right: 4px;
   color: #fff;
+}
+#Masque_btn_Ajouter_photo {
+  position: absolute;
+  top: -45%;
+  left: 36%;
+  color: #306685;
+  background-color: #cbd6dc;
+  font-family: Work Sans;
+  font-size: 14px;
+  padding-left: 30px;
+  padding-right: 30px;
+  width: 173px;
+  height: 36px;
+  border-radius: 50px;
+  background: #cbd6dc;
 }

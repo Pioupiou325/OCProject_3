@@ -405,8 +405,8 @@ button:hover {
 }
 #btn_Ajouter {
   position: relative;
-  top: 66%;
-  left: 33%;
+  top: 69%;
+  left: 32%;
   background-color: #1d6154;
   color: #fff;
   font-size: 14px;
@@ -422,8 +422,8 @@ button:hover {
   font-weight: 400;
   font-size: 14px;
   position: relative;
-  top: 72%;
-  left: 2%;
+  top: 75%;
+  left: 1%;
 }
 #modale_delete_All:hover {
   color: #da1414;
@@ -480,6 +480,7 @@ button:hover {
   font-weight: 700;
   border-radius: 60px;
   background: #a7a7a7;
+  border-color: #a7a7a7;
   top: 69%;
   left: 32%;
   padding-left: 90px;

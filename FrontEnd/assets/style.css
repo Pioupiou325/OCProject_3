@@ -128,6 +128,13 @@ table {
   border-spacing: 0;
 }
 /** end reset css**/
+a {
+  text-decoration: none;
+  color: black;
+}
+a:hover {
+  color: #837d7d;
+}
 body {
   max-width: 1440px;
   margin: 0;
@@ -184,6 +191,7 @@ li:hover {
 #introduction {
   display: flex;
   align-items: center;
+  margin:50px 0;
 }
 #introduction figure {
   flex: 1;
@@ -314,7 +322,7 @@ footer nav ul {
   display: flex;
   flex-direction: column;
 }
-.login_ok {
+#login_ok {
   display: none;
 }
 .show_filters {
@@ -354,6 +362,9 @@ button:hover {
   color: red;
   justify-content: center;
 }
+#tester:hover {
+  background-color: #247969;
+}
 
 /* IIIIIIIIIIIIIIIIIII               MODALE                     IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII */
 #overlay {
@@ -362,7 +373,6 @@ button:hover {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.6);
-  
 }
 #modale {
   display: none;
@@ -374,7 +384,6 @@ button:hover {
   width: 630px;
   height: 731px;
   border-radius: 10px;
-
 }
 #modale h2 {
   display: flex;
@@ -391,7 +400,7 @@ button:hover {
   top: 24px;
 }
 #modale_fleche_retour {
-    position: absolute;
+  position: absolute;
   left: 24px;
   top: 24px;
 }
@@ -405,6 +414,9 @@ button:hover {
   padding-left: 50px;
   padding-right: 50px;
 }
+#btn_Ajouter:hover {
+  background-color: #247969;
+}
 #modale_delete_All {
   color: #d65353;
   font-family: Syne;
@@ -414,6 +426,9 @@ button:hover {
   top: 72%;
   left: 2%;
 }
+#modale_delete_All:hover {
+  color: #da1414;
+}
 #modale_gallery {
   position: absolute;
   padding-left: 60px;
@@ -421,7 +436,6 @@ button:hover {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-column-gap: 10px;
-  
 }
 #modale_gallery img {
   width: 90%;
@@ -433,12 +447,12 @@ button:hover {
   position: absolute;
   left: 17%;
 }
-#modale_picture{
+#modale_picture {
   position: absolute;
-  top:151px;
-  left:283px;
-  font-size:4em;
- color:#B9C5CC;
+  top: 151px;
+  left: 283px;
+  font-size: 4em;
+  color: #b9c5cc;
 }
 #btn_Ajouter_photo {
   position: absolute;
@@ -508,10 +522,9 @@ button:hover {
   font-family: Work Sans;
   font-size: 14px;
 }
-#form_categories{
-  position:relative;
-  top:24%;
-
+#form_categories {
+  position: relative;
+  top: 24%;
 }
 #label_Categorie_TEXT {
   position: absolute;

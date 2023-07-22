@@ -39,7 +39,7 @@ function fetch_delete(id) {
     .then(function (reponse) {
       reponse;
       document.querySelector(".gallery").innerHTML = "";
-      document.getElementById("modale_gallery").innerText = "";      
+      document.getElementById("modale_gallery").innerText = "";
       fetch_works();
       console.log("OK");
       return;
@@ -47,7 +47,6 @@ function fetch_delete(id) {
 }
 // fonction affichage images galerie principale
 function show_images(tab) {
-  
   for (let i = 0; i < tab.length; i++) {
     const figure = document.createElement("figure");
     const image = document.createElement("img");
@@ -66,8 +65,8 @@ function mode_edition() {
   affiche.style.display = "flex";
   const affiche2 = document.querySelector(".afficher_modifier");
   affiche2.style.display = "flex";
-  document.querySelector(".login_ok").style.display = "inline";
-  document.querySelector(".login_none").style.display = "none";
+  document.querySelector("#login_ok").style.display = "inline";
+  document.querySelector("#login_none").style.display = "none";
   afficher_modifier.addEventListener("click", () => {
     modale_start();
   });
@@ -84,8 +83,8 @@ function mode_deconnect() {
   affiche.style.display = "none";
   const affiche2 = document.querySelector(".afficher_modifier");
   affiche2.style.display = "none";
-  document.querySelector(".login_ok").style.display = "none";
-  document.querySelector(".login_none").style.display = "inline";
+  document.querySelector("#login_ok").style.display = "none";
+  document.querySelector("#login_none").style.display = "inline";
 }
 
 // fonction de creation des boutons suivant le tableau categories
@@ -134,7 +133,7 @@ function create_boutons_filters() {
       }
     });
 }
-function show_images_modale(){
+function show_images_modale() {
   for (let i = 0; i < works.length; i++) {
     const figure = document.createElement("figure");
     const image = document.createElement("img");
@@ -158,7 +157,7 @@ function show_images_modale(){
     trash.addEventListener("click", () => {
       fetch_delete(trash.id);
     });
-}
+  }
 }
 
 // fonction pour afficher les filtres
@@ -186,6 +185,7 @@ function modale_start() {
   btn_modale_Ajouter_photo.innerHTML = "Ajouter une photo";
   document.getElementById("modale").appendChild(btn_modale_Ajouter_photo);
   const modale_delete_all = document.createElement("a");
+  modale_delete_all.href="#";
   modale_delete_all.innerText = "Supprimer la galerie";
   modale_delete_all.id = "modale_delete_All";
   document.getElementById("modale").appendChild(modale_delete_all);
@@ -194,18 +194,18 @@ function modale_start() {
   document.getElementById("modale").appendChild(barre);
   // affichage des works dans la modale
   show_images_modale();
-    
-    // supprimer toutes les images de la galerie en 1 fois
-    modale_delete_all.addEventListener("click", () => {
-      works.forEach((element) => {
-        fetch_delete(element.id);
-      });
-    });
 
-    // overlay.addEventListener("click", ()=>{
-    //   close_modale();
-    // })
-  
+  // supprimer toutes les images de la galerie en 1 fois
+  modale_delete_all.addEventListener("click", () => {
+    works.forEach((element) => {
+      fetch_delete(element.id);
+    });
+  });
+
+  // overlay.addEventListener("click", ()=>{
+  //   close_modale();
+  // })
+
   modale_croix_close.addEventListener("click", () => {
     close_modale();
     return;

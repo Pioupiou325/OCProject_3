@@ -1,4 +1,3 @@
-var delete_in_progress = 0; /* pour relancer la modale après un DELETE pour forcer le reload de l affichage*/
 var array_categories;
 let array_works;
 function fetch_works() {
@@ -7,8 +6,15 @@ function fetch_works() {
     .then((response) => {
       works = response;
       show_images(works);
-      modale_start();
-      if (delete_in_progress != 1) { close_modale(); }
+
+      if (!document.getElementById("modale_gallery")) {
+        console.log("pas de gallerie modale");
+      } else {
+        console.log("gallerie modale ouverte");
+        modale_start();
+      }
+
+      return;
     })
     .catch((error) => {
       console.log(error);
@@ -32,13 +38,16 @@ function fetch_delete(id) {
     })
     .then(function (reponse) {
       reponse;
+      document.querySelector(".gallery").innerHTML = "";
+      document.getElementById("modale_gallery").innerText = "";      
+      fetch_works();
       console.log("OK");
-             return;
+      return;
     });
 }
 // fonction affichage images galerie principale
 function show_images(tab) {
-  document.querySelector(".gallery").innerHTML = "";
+  
   for (let i = 0; i < tab.length; i++) {
     const figure = document.createElement("figure");
     const image = document.createElement("img");
@@ -125,6 +134,32 @@ function create_boutons_filters() {
       }
     });
 }
+function show_images_modale(){
+  for (let i = 0; i < works.length; i++) {
+    const figure = document.createElement("figure");
+    const image = document.createElement("img");
+    image.src = works[i].imageUrl;
+    const subtitle = document.createElement("p");
+    subtitle.innerText = "éditer";
+    //   inclut les 2 enfants image+titre dans la div figure
+    figure.appendChild(image);
+    figure.appendChild(subtitle);
+    const container_trash = document.createElement("div");
+    container_trash.id = "container_trash";
+    const trash = document.createElement("i");
+    trash.innerHTML = '<i class="fa-solid fa-trash-can" </i>';
+    trash.class = "trash";
+    trash.id = works[i].id;
+    container_trash.appendChild(trash);
+    figure.appendChild(container_trash);
+    //   inclut l' enfant figure dans la div gallery
+    document.getElementById("modale_gallery").appendChild(figure);
+    // ajoute un eventListener sur chaque trash pour effacer 1 seul  travail à la fois
+    trash.addEventListener("click", () => {
+      fetch_delete(trash.id);
+    });
+}
+}
 
 // fonction pour afficher les filtres
 function show_filters() {
@@ -158,51 +193,22 @@ function modale_start() {
   barre.id = "barre";
   document.getElementById("modale").appendChild(barre);
   // affichage des works dans la modale
-  for (let i = 0; i < works.length; i++) {
-    const figure = document.createElement("figure");
-    const image = document.createElement("img");
-    image.src = works[i].imageUrl;
-    const subtitle = document.createElement("p");
-    subtitle.innerText = "éditer";
-    //   inclut les 2 enfants image+titre dans la div figure
-    figure.appendChild(image);
-    figure.appendChild(subtitle);
-    const container_trash = document.createElement("div");
-    container_trash.id = "container_trash";
-    const trash = document.createElement("i");
-    trash.innerHTML = '<i class="fa-solid fa-trash-can" </i>';
-    trash.class = "trash";
-    trash.id = works[i].id;
-    container_trash.appendChild(trash);
-    figure.appendChild(container_trash);
-    //   inclut l' enfant figure dans la div gallery
-    document.getElementById("modale_gallery").appendChild(figure);
-    // ajoute un eventListener sur chaque trash
-    trash.addEventListener("click", () => {
-      delete_in_progress = 1;
-      fetch_delete(trash.id);
-      fetch_works();
-      show_images(works);
-    });
-    // supprimer toutes les images de la galerie
+  show_images_modale();
+    
+    // supprimer toutes les images de la galerie en 1 fois
     modale_delete_all.addEventListener("click", () => {
       works.forEach((element) => {
-        
         fetch_delete(element.id);
       });
-      modale_gallery.innerText = " ";
-      delete_in_progress = 1;
-      fetch_works();
-      
-      
     });
 
     // overlay.addEventListener("click", ()=>{
     //   close_modale();
     // })
-  }
+  
   modale_croix_close.addEventListener("click", () => {
     close_modale();
+    return;
   });
   btn_Ajouter.addEventListener("click", () => {
     modale_Ajouter();
@@ -297,10 +303,7 @@ function modale_start() {
 function close_modale() {
   document.getElementById("overlay").style.display = "none";
   document.getElementById("modale").style.display = "none";
-  if (delete_in_progress === 1) {
-    delete_in_progress = 0;
-    modale_start();
-  }
+  return;
 }
 
 fetch_works();

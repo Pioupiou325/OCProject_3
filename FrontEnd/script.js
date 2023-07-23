@@ -259,30 +259,18 @@ function modale_start() {
     btn_Ajouter_photo.innertext = "+ Ajouter photo";
     btn_Ajouter_photo.setAttribute("accept", "image/*");
     btn_Ajouter_photo.setAttribute("type", "file");
-    
 
-btn_Ajouter_photo.addEventListener("change",()=>{
-  var reader = new FileReader();
-  reader.addEventListener("load", function() {
-    var image_A_Ajouter = document.createElement("img");
-    
-    image_A_Ajouter.src = reader.result;
-    
-    console.log(image_A_Ajouter.src);
-    Ajouter_Photo_Part.appendChild(image_A_Ajouter);
-  }); 
-  
-      console.log(reader.readAsDataURL(btn_Ajouter_photo.files[0]));
-})
+
+   
+
     document.getElementById("modale").appendChild(form_ajout_photo);
-    
 
     label_title = document.createElement("label");
-    label_title.setAttribute("for","input_Title")
-    label_title.id="label_title";
-    label_title.innerText="Titre";
+    label_title.setAttribute("for", "input_Title");
+    label_title.id = "label_title";
+    label_title.innerText = "Titre";
 
-    const input_Title = document.createElement("input");
+    var input_Title = document.createElement("input");
     input_Title.setAttribute("type", "text");
     input_Title.setAttribute("name", "Title");
     input_Title.setAttribute("for", "nombre");
@@ -290,12 +278,10 @@ btn_Ajouter_photo.addEventListener("change",()=>{
     form_categories.appendChild(label_title);
     form_categories.appendChild(input_Title);
     form_categories.appendChild(btn_Ajouter_photo);
-    
-   
 
     const label_ajout_photo = document.createElement("button");
-    label_ajout_photo.id="Masque_btn_Ajouter_photo";
-    label_ajout_photo.innerHTML="+ Ajouter photo";
+    label_ajout_photo.id = "Masque_btn_Ajouter_photo";
+    label_ajout_photo.innerHTML = "+ Ajouter photo";
     form_categories.appendChild(label_ajout_photo);
 
     const label_Categorie = document.createElement("label");
@@ -310,30 +296,74 @@ btn_Ajouter_photo.addEventListener("change",()=>{
     select_categories.id = "select_categories";
     form_categories.appendChild(select_categories);
 
+   
+
     //  créations des options value = catégopries
     for (i = 0; i < array_categories.length; i++) {
       const option_categories = document.createElement("option");
-      option_categories.setAttribute("value", array_categories[i].name);
+      option_categories.setAttribute("value", array_categories[i].id);
       option_categories.innerText = array_categories[i].name;
-      option_categories.setAttribute("selected","false");
-      select_categories.appendChild(option_categories);
+      option_categories.setAttribute("selected", "false");
       
+      select_categories.appendChild(option_categories);
     }
+    // option vide
+    const option_categories = document.createElement("option");
+    option_categories.setAttribute("value", 0);
+    option_categories.innerText = "    ";
+    option_categories.setAttribute("selected", "true");
+    
+    select_categories.appendChild(option_categories);
+
 
     const barre = document.createElement("div");
     barre.id = "barre";
     document.getElementById("modale").appendChild(barre);
-
-   
-   
- 
-  
-    
+    var image_A_Ajouter = document.createElement("img");
 
     
-      
-      
-    
+// affichage photo en preview
+btn_Ajouter_photo.addEventListener("change", () => {
+  // lecture du fichier de l input file
+  var reader = new FileReader();
+  reader.addEventListener("load", function () {    
+    image_A_Ajouter.src = reader.result;
+    console.log(image_A_Ajouter.src);
+    Ajouter_Photo_Part.appendChild(image_A_Ajouter);
+    var decodedStringAtoB = btoa(image_A_Ajouter);
+    console.log(decodedStringAtoB);   
+  });
+  reader.readAsDataURL(btn_Ajouter_photo.files[0]);
+  test_form_full();  
+});
+
+input_Title.addEventListener("change",()=>{
+  test_form_full();
+})
+
+select_categories.addEventListener("change",()=>{
+  test_form_full();  
+})
+
+function test_form_full(){
+  if (btn_Ajouter_photo.value != "" && input_Title.value != "" && select_categories.value!=0){
+    btn_Valider_Ajouter_photo.style.backgroundColor="#1d6154";
+    btn_Valider_Ajouter_photo.addEventListener("click", ()=>{
+      // fetch pour post au backend avec form data
+      console.log(btn_Ajouter_photo.value);
+      console.log(input_Title.value);
+      console.log(select_categories.value);
+      var formData = new FormData();
+      formData.append("image",btn_Ajouter_photo.value);
+      formData.append("title",input_Title.value);
+      formData.append("category",select_categories.value);
+
+      console.log(formData);
+    })
+}else{
+  btn_Valider_Ajouter_photo.style.backgroundColor="#a7a7a7";
+}
+}
 
     modale_croix_close.addEventListener("click", () => {
       close_modale();
@@ -357,3 +387,4 @@ show_filters();
 if (sessionStorage.getItem("token") != null) {
   mode_edition();
 }
+

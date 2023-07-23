@@ -277,10 +277,10 @@ function modale_start() {
     form_categories.appendChild(btn_Ajouter_photo);
    
 
-    // const label_ajout_photo = document.createElement("button");
-    // label_ajout_photo.id="Masque_btn_Ajouter_photo";
-    // label_ajout_photo.innerHTML="+ Ajouter photo";
-    // form_categories.appendChild(label_ajout_photo);
+    const label_ajout_photo = document.createElement("button");
+    label_ajout_photo.id="Masque_btn_Ajouter_photo";
+    label_ajout_photo.innerHTML="+ Ajouter photo";
+    form_categories.appendChild(label_ajout_photo);
 
     const label_Categorie = document.createElement("label");
     // label_Categorie.id = "label_Catégorie";

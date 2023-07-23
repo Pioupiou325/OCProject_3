@@ -446,6 +446,14 @@ button:hover {
   position: absolute;
   left: 17%;
 }
+#Ajouter_Photo_Part img{
+  z-index: 1;
+  position: absolute;
+    width: 175px;
+    height: 170px;
+    top: 0%;
+    left: 28%;
+}
 #modale_picture {
   position: absolute;
   top: 151px;

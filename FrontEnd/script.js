@@ -257,10 +257,25 @@ function modale_start() {
     const btn_Ajouter_photo = document.createElement("input");
     btn_Ajouter_photo.id = "btn_Ajouter_photo";
     btn_Ajouter_photo.innertext = "+ Ajouter photo";
-    btn_Ajouter_photo.setAttribute("accept", "image/png, image/jpeg");
+    btn_Ajouter_photo.setAttribute("accept", "image/*");
     btn_Ajouter_photo.setAttribute("type", "file");
+    
 
+btn_Ajouter_photo.addEventListener("change",()=>{
+  var reader = new FileReader();
+  reader.addEventListener("load", function() {
+    var image_A_Ajouter = document.createElement("img");
+    
+    image_A_Ajouter.src = reader.result;
+    
+    console.log(image_A_Ajouter.src);
+    Ajouter_Photo_Part.appendChild(image_A_Ajouter);
+  }); 
+  
+      console.log(reader.readAsDataURL(btn_Ajouter_photo.files[0]));
+})
     document.getElementById("modale").appendChild(form_ajout_photo);
+    
 
     label_title = document.createElement("label");
     label_title.setAttribute("for","input_Title")
@@ -275,6 +290,7 @@ function modale_start() {
     form_categories.appendChild(label_title);
     form_categories.appendChild(input_Title);
     form_categories.appendChild(btn_Ajouter_photo);
+    
    
 
     const label_ajout_photo = document.createElement("button");
@@ -292,8 +308,6 @@ function modale_start() {
 
     const select_categories = document.createElement("select");
     select_categories.id = "select_categories";
-    select_categories.setAttribute("value", " ");
-    select_categories.innerText = " ";
     form_categories.appendChild(select_categories);
 
     //  créations des options value = catégopries
@@ -301,12 +315,25 @@ function modale_start() {
       const option_categories = document.createElement("option");
       option_categories.setAttribute("value", array_categories[i].name);
       option_categories.innerText = array_categories[i].name;
+      option_categories.setAttribute("selected","false");
       select_categories.appendChild(option_categories);
+      
     }
 
     const barre = document.createElement("div");
     barre.id = "barre";
     document.getElementById("modale").appendChild(barre);
+
+   
+   
+ 
+  
+    
+
+    
+      
+      
+    
 
     modale_croix_close.addEventListener("click", () => {
       close_modale();

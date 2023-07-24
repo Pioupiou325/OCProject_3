@@ -1,5 +1,3 @@
-// var array_categories;
-// let array_works;
 function fetch_works() {
   fetch("http://localhost:5678/api/works")
     .then((response) => response.json())
@@ -20,6 +18,33 @@ function fetch_works() {
       console.log(error);
     });
   return;
+}
+function fetch_Ajouter(form) {
+  for (var value of form.values()) {
+    console.log(value);
+  }
+  let Data = {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + sessionStorage.getItem("token"),
+      "Content-Type": "multipart/form-data",
+    },
+    body: form,
+  };
+  fetch("http://localhost:5678/api/works/", Data)
+    .then(function (reponse) {
+      if (!reponse.ok) {
+        throw new Error(error);
+      }
+      return reponse.json();
+    })
+    .then(function (reponse) {
+      reponse;
+
+      console.log("ajouté");
+      return;
+    });
 }
 // fonction pour effacer un work
 function fetch_delete(id) {
@@ -163,7 +188,6 @@ function create_boutons_filters() {
     });
 }
 
-
 // fonction pour afficher les filtres
 function show_filters() {
   const show_filters = document.querySelector(".filters");
@@ -206,8 +230,8 @@ function modale_start() {
     works.forEach((element) => {
       fetch_delete(element.id);
     });
-  }); 
-// fermeture de la modale en cliquant sur la croix
+  });
+  // fermeture de la modale en cliquant sur la croix
   modale_croix_close.addEventListener("click", () => {
     close_modale();
     return;
@@ -237,7 +261,7 @@ function modale_start() {
     const modale_picture = document.createElement("i");
     modale_picture.innerHTML = '<i class="fa-solid fa-image" </i>';
     modale_picture.id = "modale_picture";
-    document.getElementById("modale").appendChild(modale_picture); 
+    document.getElementById("modale").appendChild(modale_picture);
     const explication = document.createElement("p");
     explication.innerText = "jpg, png : 4mo max";
     explication.id = "explication";
@@ -249,12 +273,14 @@ function modale_start() {
     // IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIdebut formIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
     const form_ajout_photo = document.createElement("form");
     form_ajout_photo.id = "form_categories";
+
     const btn_Ajouter_photo = document.createElement("input");
     btn_Ajouter_photo.id = "btn_Ajouter_photo";
     btn_Ajouter_photo.innertext = "+ Ajouter photo";
     btn_Ajouter_photo.setAttribute("accept", "image/*");
     btn_Ajouter_photo.setAttribute("type", "file");
     document.getElementById("modale").appendChild(form_ajout_photo);
+
     label_title = document.createElement("label");
     label_title.setAttribute("for", "input_Title");
     label_title.id = "label_title";
@@ -288,8 +314,8 @@ function modale_start() {
       option_categories.setAttribute("selected", "false");
       select_categories.appendChild(option_categories);
     }
-    // création d' une option vide pour affichage neutre par défaut 
-    const option_categories = document.createElement("option");    
+    // création d' une option vide pour affichage neutre par défaut
+    const option_categories = document.createElement("option");
     option_categories.setAttribute("value", 0);
     option_categories.innerText = "    ";
     option_categories.setAttribute("selected", "true");
@@ -297,7 +323,7 @@ function modale_start() {
     // création de la barre de séparation avant le bouton en bas de page
     const barre = document.createElement("div");
     barre.id = "barre";
-    document.getElementById("modale").appendChild(barre);   
+    document.getElementById("modale").appendChild(barre);
 
     // affichage photo en preview
     var image_A_Ajouter = document.createElement("img");
@@ -308,11 +334,11 @@ function modale_start() {
       reader.addEventListener("load", function () {
         image_A_Ajouter.src = reader.result;
         // rajoute l image preview dans la partie du haut
-        Ajouter_Photo_Part.appendChild(image_A_Ajouter);        
+        Ajouter_Photo_Part.appendChild(image_A_Ajouter);
       });
-      // envoie la photo en lecture pour affichage à la fonction 
-      reader.readAsDataURL(btn_Ajouter_photo.files[0]);       
-// vérification des 3 conditions pour afficher le bouton valider
+      // envoie la photo en lecture pour affichage à la fonction
+      reader.readAsDataURL(btn_Ajouter_photo.files[0]);
+      // vérification des 3 conditions pour afficher le bouton valider
       test_form_full();
     });
     input_Title.addEventListener("change", () => {
@@ -323,6 +349,7 @@ function modale_start() {
       // vérification des 3 conditions pour afficher le bouton valider
       test_form_full();
     });
+
     function test_form_full() {
       if (
         btn_Ajouter_photo.value != "" &&
@@ -331,15 +358,15 @@ function modale_start() {
       ) {
         btn_Valider_Ajouter_photo.style.backgroundColor = "#1d6154";
         btn_Valider_Ajouter_photo.addEventListener("click", () => {
-          // fetch pour post au backend avec form data
-          console.log(btn_Ajouter_photo.value);
-          console.log(input_Title.value);
-          console.log(select_categories.value);
-          var formData = new FormData();
-          formData.append("image", btn_Ajouter_photo.value);
-          formData.append("title", input_Title.value);
-          formData.append("category", select_categories.value);
-          console.log(formData);
+          const form_Ajouter = new FormData();
+          let url =
+            btn_Ajouter_photo.files[0].name +
+            ";type=" +
+            btn_Ajouter_photo.files[0].type;
+          form_Ajouter.append("image", btn_Ajouter_photo.files[0]);
+          form_Ajouter.append("title", input_Title.value);
+          form_Ajouter.append("category", select_categories.value);
+          fetch_Ajouter(form_Ajouter);
         });
       } else {
         btn_Valider_Ajouter_photo.style.backgroundColor = "#a7a7a7";

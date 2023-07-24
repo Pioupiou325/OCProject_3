@@ -1,5 +1,5 @@
-var array_categories;
-let array_works;
+// var array_categories;
+// let array_works;
 function fetch_works() {
   fetch("http://localhost:5678/api/works")
     .then((response) => response.json())
@@ -58,11 +58,39 @@ function show_images(tab) {
     document.querySelector(".gallery").appendChild(figure);
   }
 }
+// création et affichage des images dans la modale
+function show_images_modale() {
+  for (let i = 0; i < works.length; i++) {
+    const figure = document.createElement("figure");
+    const image = document.createElement("img");
+    image.src = works[i].imageUrl;
+    const subtitle = document.createElement("p");
+    subtitle.innerText = "éditer";
+    //   inclut les 2 enfants image+titre dans la div figure
+    figure.appendChild(image);
+    figure.appendChild(subtitle);
+    const container_trash = document.createElement("div");
+    container_trash.id = "container_trash";
+    const trash = document.createElement("i");
+    trash.innerHTML = '<i class="fa-solid fa-trash-can" </i>';
+    trash.class = "trash";
+    trash.id = works[i].id;
+    container_trash.appendChild(trash);
+    figure.appendChild(container_trash);
+    //   inclut l' enfant figure dans la div gallery
+    document.getElementById("modale_gallery").appendChild(figure);
+    // ajoute un eventListener sur chaque trash pour effacer 1 seul  travail à la fois
+    trash.addEventListener("click", () => {
+      fetch_delete(trash.id);
+    });
+  }
+}
 // fonction mode edition quand login OK
 function mode_edition() {
   document.getElementById("filtres").style.display = "none";
   const affiche = document.querySelector(".bloc_mode_edition");
   affiche.style.display = "flex";
+  document.querySelector(".afficher_noeffect").style.display = "flex";
   const affiche2 = document.querySelector(".afficher_modifier");
   affiche2.style.display = "flex";
   document.querySelector("#login_ok").style.display = "inline";
@@ -78,6 +106,7 @@ function mode_edition() {
 function mode_deconnect() {
   sessionStorage.removeItem("token");
   sessionStorage.removeItem("userId");
+  document.querySelector(".afficher_noeffect").style.display = "none";
   document.getElementById("filtres").style.display = "flex";
   const affiche = document.querySelector(".bloc_mode_edition");
   affiche.style.display = "none";
@@ -133,32 +162,7 @@ function create_boutons_filters() {
       }
     });
 }
-function show_images_modale() {
-  for (let i = 0; i < works.length; i++) {
-    const figure = document.createElement("figure");
-    const image = document.createElement("img");
-    image.src = works[i].imageUrl;
-    const subtitle = document.createElement("p");
-    subtitle.innerText = "éditer";
-    //   inclut les 2 enfants image+titre dans la div figure
-    figure.appendChild(image);
-    figure.appendChild(subtitle);
-    const container_trash = document.createElement("div");
-    container_trash.id = "container_trash";
-    const trash = document.createElement("i");
-    trash.innerHTML = '<i class="fa-solid fa-trash-can" </i>';
-    trash.class = "trash";
-    trash.id = works[i].id;
-    container_trash.appendChild(trash);
-    figure.appendChild(container_trash);
-    //   inclut l' enfant figure dans la div gallery
-    document.getElementById("modale_gallery").appendChild(figure);
-    // ajoute un eventListener sur chaque trash pour effacer 1 seul  travail à la fois
-    trash.addEventListener("click", () => {
-      fetch_delete(trash.id);
-    });
-  }
-}
+
 
 // fonction pour afficher les filtres
 function show_filters() {
@@ -184,11 +188,13 @@ function modale_start() {
   btn_modale_Ajouter_photo.id = "btn_Ajouter";
   btn_modale_Ajouter_photo.innerHTML = "Ajouter une photo";
   document.getElementById("modale").appendChild(btn_modale_Ajouter_photo);
+  // lien pour supprimer toute la galerie
   const modale_delete_all = document.createElement("a");
   modale_delete_all.href = "#";
   modale_delete_all.innerText = "Supprimer la galerie";
   modale_delete_all.id = "modale_delete_All";
   document.getElementById("modale").appendChild(modale_delete_all);
+  // barrre de séparation avant bouton
   const barre = document.createElement("div");
   barre.id = "barre";
   document.getElementById("modale").appendChild(barre);
@@ -200,16 +206,13 @@ function modale_start() {
     works.forEach((element) => {
       fetch_delete(element.id);
     });
-  });
-
-  // overlay.addEventListener("click", ()=>{
-  //   close_modale();
-  // })
-
+  }); 
+// fermeture de la modale en cliquant sur la croix
   modale_croix_close.addEventListener("click", () => {
     close_modale();
     return;
   });
+  // bouton pour aller sur la partie ajouter (modale 2)
   btn_Ajouter.addEventListener("click", () => {
     modale_Ajouter();
   });
@@ -234,42 +237,28 @@ function modale_start() {
     const modale_picture = document.createElement("i");
     modale_picture.innerHTML = '<i class="fa-solid fa-image" </i>';
     modale_picture.id = "modale_picture";
-    document.getElementById("modale").appendChild(modale_picture);
-
-    // document
-    //   .getElementById("Ajouter_Photo_Part")
-    //   .appendChild(btn_Ajouter_photo);
-
+    document.getElementById("modale").appendChild(modale_picture); 
     const explication = document.createElement("p");
     explication.innerText = "jpg, png : 4mo max";
     explication.id = "explication";
     document.getElementById("Ajouter_Photo_Part").appendChild(explication);
-
     const btn_Valider_Ajouter_photo = document.createElement("button");
     btn_Valider_Ajouter_photo.id = "btn_Valider_Ajouter_photo";
     btn_Valider_Ajouter_photo.innerHTML = "Valider";
     document.getElementById("modale").appendChild(btn_Valider_Ajouter_photo);
-
     // IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIdebut formIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
     const form_ajout_photo = document.createElement("form");
     form_ajout_photo.id = "form_categories";
-
     const btn_Ajouter_photo = document.createElement("input");
     btn_Ajouter_photo.id = "btn_Ajouter_photo";
     btn_Ajouter_photo.innertext = "+ Ajouter photo";
     btn_Ajouter_photo.setAttribute("accept", "image/*");
     btn_Ajouter_photo.setAttribute("type", "file");
-
-
-   
-
     document.getElementById("modale").appendChild(form_ajout_photo);
-
     label_title = document.createElement("label");
     label_title.setAttribute("for", "input_Title");
     label_title.id = "label_title";
     label_title.innerText = "Titre";
-
     var input_Title = document.createElement("input");
     input_Title.setAttribute("type", "text");
     input_Title.setAttribute("name", "Title");
@@ -278,97 +267,87 @@ function modale_start() {
     form_categories.appendChild(label_title);
     form_categories.appendChild(input_Title);
     form_categories.appendChild(btn_Ajouter_photo);
-
     const label_ajout_photo = document.createElement("button");
     label_ajout_photo.id = "Masque_btn_Ajouter_photo";
     label_ajout_photo.innerHTML = "+ Ajouter photo";
     form_categories.appendChild(label_ajout_photo);
-
     const label_Categorie = document.createElement("label");
     // label_Categorie.id = "label_Catégorie";
     label_Categorie.setAttribute("for", "select_categories");
     label_Categorie.setAttribute("class", "label_Categorie");
     label_Categorie.innerText = "Catégories";
-
     form_categories.appendChild(label_Categorie);
-
     const select_categories = document.createElement("select");
     select_categories.id = "select_categories";
     form_categories.appendChild(select_categories);
-
-   
-
     //  créations des options value = catégopries
     for (i = 0; i < array_categories.length; i++) {
       const option_categories = document.createElement("option");
       option_categories.setAttribute("value", array_categories[i].id);
       option_categories.innerText = array_categories[i].name;
       option_categories.setAttribute("selected", "false");
-      
       select_categories.appendChild(option_categories);
     }
-    // option vide
-    const option_categories = document.createElement("option");
+    // création d' une option vide pour affichage neutre par défaut 
+    const option_categories = document.createElement("option");    
     option_categories.setAttribute("value", 0);
     option_categories.innerText = "    ";
     option_categories.setAttribute("selected", "true");
-    
     select_categories.appendChild(option_categories);
-
-
+    // création de la barre de séparation avant le bouton en bas de page
     const barre = document.createElement("div");
     barre.id = "barre";
-    document.getElementById("modale").appendChild(barre);
+    document.getElementById("modale").appendChild(barre);   
+
+    // affichage photo en preview
     var image_A_Ajouter = document.createElement("img");
-
-    
-// affichage photo en preview
-btn_Ajouter_photo.addEventListener("change", () => {
-  // lecture du fichier de l input file
-  var reader = new FileReader();
-  reader.addEventListener("load", function () {    
-    image_A_Ajouter.src = reader.result;
-    console.log(image_A_Ajouter.src);
-    Ajouter_Photo_Part.appendChild(image_A_Ajouter);
-    var decodedStringAtoB = btoa(image_A_Ajouter);
-    console.log(decodedStringAtoB);   
-  });
-  reader.readAsDataURL(btn_Ajouter_photo.files[0]);
-  test_form_full();  
-});
-
-input_Title.addEventListener("change",()=>{
-  test_form_full();
-})
-
-select_categories.addEventListener("change",()=>{
-  test_form_full();  
-})
-
-function test_form_full(){
-  if (btn_Ajouter_photo.value != "" && input_Title.value != "" && select_categories.value!=0){
-    btn_Valider_Ajouter_photo.style.backgroundColor="#1d6154";
-    btn_Valider_Ajouter_photo.addEventListener("click", ()=>{
-      // fetch pour post au backend avec form data
-      console.log(btn_Ajouter_photo.value);
-      console.log(input_Title.value);
-      console.log(select_categories.value);
-      var formData = new FormData();
-      formData.append("image",btn_Ajouter_photo.value);
-      formData.append("title",input_Title.value);
-      formData.append("category",select_categories.value);
-
-      console.log(formData);
-    })
-}else{
-  btn_Valider_Ajouter_photo.style.backgroundColor="#a7a7a7";
-}
-}
-
+    btn_Ajouter_photo.addEventListener("change", () => {
+      // création d'un filereader
+      var reader = new FileReader();
+      // fonction au chargement de l image pour sa lecture
+      reader.addEventListener("load", function () {
+        image_A_Ajouter.src = reader.result;
+        // rajoute l image preview dans la partie du haut
+        Ajouter_Photo_Part.appendChild(image_A_Ajouter);        
+      });
+      // envoie la photo en lecture pour affichage à la fonction 
+      reader.readAsDataURL(btn_Ajouter_photo.files[0]);       
+// vérification des 3 conditions pour afficher le bouton valider
+      test_form_full();
+    });
+    input_Title.addEventListener("change", () => {
+      // vérification des 3 conditions pour afficher le bouton valider
+      test_form_full();
+    });
+    select_categories.addEventListener("change", () => {
+      // vérification des 3 conditions pour afficher le bouton valider
+      test_form_full();
+    });
+    function test_form_full() {
+      if (
+        btn_Ajouter_photo.value != "" &&
+        input_Title.value != "" &&
+        select_categories.value != 0
+      ) {
+        btn_Valider_Ajouter_photo.style.backgroundColor = "#1d6154";
+        btn_Valider_Ajouter_photo.addEventListener("click", () => {
+          // fetch pour post au backend avec form data
+          console.log(btn_Ajouter_photo.value);
+          console.log(input_Title.value);
+          console.log(select_categories.value);
+          var formData = new FormData();
+          formData.append("image", btn_Ajouter_photo.value);
+          formData.append("title", input_Title.value);
+          formData.append("category", select_categories.value);
+          console.log(formData);
+        });
+      } else {
+        btn_Valider_Ajouter_photo.style.backgroundColor = "#a7a7a7";
+      }
+    }
     modale_croix_close.addEventListener("click", () => {
       close_modale();
     });
-
     modale_fleche_retour.addEventListener("click", () => {
       modale_start();
     });
@@ -381,10 +360,14 @@ function close_modale() {
   return;
 }
 
+// main à exécuter
+// récupération des travaux
 fetch_works();
+// création des boutons
 create_boutons_filters();
+// affichage des filtres
 show_filters();
+// si le token existe lancement du mode édition
 if (sessionStorage.getItem("token") != null) {
   mode_edition();
 }
-

@@ -318,6 +318,16 @@ footer nav ul {
   display: none;
   gap: 10px;
 }
+.afficher_noeffect{
+  display: flex;
+  position:relative;
+  display: none;
+  gap: 10px;
+  top:10px;
+  left:53px;
+  
+  
+}
 .modif_photo_Sophie {
   display: flex;
   flex-direction: column;

@@ -5,18 +5,13 @@ function fetch_works() {
       works = response;
       show_images(works);
 
-      if (!document.getElementById("modale_gallery")) {
-        console.log("pas de gallerie modale");
-      } else {
-        console.log("gallerie modale ouverte");
+      if (document.getElementById("modale_gallery")) {
         modale_start();
       }
 
       return;
     })
-    .catch((error) => {
-      console.log(error);
-    });
+    .catch(() => {});
   return;
 }
 function fetch_Ajouter(form) {
@@ -28,7 +23,6 @@ function fetch_Ajouter(form) {
     headers: {
       Accept: "application/json",
       Authorization: "Bearer " + sessionStorage.getItem("token"),
-      "Content-Type": "multipart/form-data",
     },
     body: form,
   };
@@ -167,7 +161,6 @@ function create_boutons_filters() {
         btn_filter.innerText = array_categories[i].name;
         filters.appendChild(btn_filter);
         btn_filter.addEventListener("click", () => {
-          console.log(filters.id);
           document.querySelector(".gallery").innerText = "";
           array_works = works;
           // tri des works par catégorie
@@ -175,7 +168,6 @@ function create_boutons_filters() {
             if (element.category.name === btn_filter.id) {
               return true;
             } else {
-              console.log(element.category.name);
               return false;
             }
           }
@@ -234,11 +226,20 @@ function modale_start() {
   // fermeture de la modale en cliquant sur la croix
   modale_croix_close.addEventListener("click", () => {
     close_modale();
-    return;
   });
   // bouton pour aller sur la partie ajouter (modale 2)
   btn_Ajouter.addEventListener("click", () => {
     modale_Ajouter();
+  });
+  overlay.addEventListener("click", (e) => {
+    if (
+      !e.target.closest("#modale") &&
+      !e.target.closest("#btn_Ajouter") &&
+      !e.target.closest("#modale_fleche_retour") &&
+      !e.target.closest("#modale_delete_All")
+    ) {
+      close_modale();
+    }
   });
 
   // page 2 modale
@@ -359,10 +360,7 @@ function modale_start() {
         btn_Valider_Ajouter_photo.style.backgroundColor = "#1d6154";
         btn_Valider_Ajouter_photo.addEventListener("click", () => {
           const form_Ajouter = new FormData();
-          let url =
-            btn_Ajouter_photo.files[0].name +
-            ";type=" +
-            btn_Ajouter_photo.files[0].type;
+
           form_Ajouter.append("image", btn_Ajouter_photo.files[0]);
           form_Ajouter.append("title", input_Title.value);
           form_Ajouter.append("category", select_categories.value);

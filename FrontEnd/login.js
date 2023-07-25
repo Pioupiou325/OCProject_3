@@ -18,7 +18,7 @@ function test_login() {
     .then(function (reponse) {
       if (!reponse.ok) {
         document.querySelector(".erreur_identifiants").style.display = "flex";
-        throw new Error("identifiant et/ou mot de passe incorrect");
+        return;
       }
       return reponse.json();
     })
@@ -31,8 +31,11 @@ function test_login() {
       affiche.style.display = "flex";
     })
     .catch((error) => {
-      console.error(error);
-    });
+      console.log("erreur " + error.code);
+      return;
+    }
+      
+    );
 }
 
 const form = document.querySelector("form");

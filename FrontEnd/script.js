@@ -1,3 +1,4 @@
+let array_categories;
 function fetch_works() {
   fetch("http://localhost:5678/api/works")
     .then((response) => response.json())
@@ -35,7 +36,7 @@ function fetch_Ajouter(form) {
       reponse;
       reponse.category = {
         id: reponse.id,
-        name: array_categories[reponse.categoryId].name,
+        name: array_categories[reponse.categoryId - 1].name,
       };
       close_modale();
       fetch_works();
@@ -364,14 +365,13 @@ function modale_start() {
         input_Title.value != "" &&
         select_categories.value != 0
       ) {
-        
         btn_Valider_Ajouter_photo.style.backgroundColor = "#1d6154";
         btn_Valider_Ajouter_photo.addEventListener("click", () => {
           const form_Ajouter = new FormData();
-        form_Ajouter.append("image", btn_Ajouter_photo.files[0]);
-        form_Ajouter.append("title", input_Title.value);
-        form_Ajouter.append("category", select_categories.value);
-        fetch_Ajouter(form_Ajouter);
+          form_Ajouter.append("image", btn_Ajouter_photo.files[0]);
+          form_Ajouter.append("title", input_Title.value);
+          form_Ajouter.append("category", select_categories.value);
+          fetch_Ajouter(form_Ajouter);
         });
       } else {
         btn_Valider_Ajouter_photo.style.backgroundColor = "#a7a7a7";

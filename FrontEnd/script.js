@@ -18,6 +18,7 @@ function fetch_Ajouter(form) {
   for (var value of form.values()) {
     console.log(value);
   }
+  console.log(array_categories);
   let Data = {
     method: "POST",
     headers: {
@@ -35,8 +36,11 @@ function fetch_Ajouter(form) {
     })
     .then(function (reponse) {
       reponse;
-
+      reponse.category = {"id": reponse.id,"name":array_categories[reponse.categoryId].name};
+      console.table(reponse);
       console.log("ajouté");
+      close_modale();
+      fetch_works();
       return;
     });
 }
@@ -61,11 +65,13 @@ function fetch_delete(id) {
       document.getElementById("modale_gallery").innerText = "";
       fetch_works();
       console.log("OK");
+      
       return;
     });
 }
 // fonction affichage images galerie principale
 function show_images(tab) {
+  document.querySelector(".gallery").innerText = "";
   for (let i = 0; i < tab.length; i++) {
     const figure = document.createElement("figure");
     const image = document.createElement("img");

@@ -30,9 +30,8 @@ function test_login() {
       const affiche = document.querySelector(".bloc_mode_edition");
       affiche.style.display = "flex";
     })
-    .catch((error) => {
-      console.log("erreur " + error.code);
-      return;
+    .catch(() => {
+            return;
     }
       
     );

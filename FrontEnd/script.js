@@ -14,11 +14,8 @@ function fetch_works() {
     .catch(() => {});
   return;
 }
+// fonction pour ajouter un work
 function fetch_Ajouter(form) {
-  for (var value of form.values()) {
-    console.log(value);
-  }
-  console.log(array_categories);
   let Data = {
     method: "POST",
     headers: {
@@ -36,13 +33,15 @@ function fetch_Ajouter(form) {
     })
     .then(function (reponse) {
       reponse;
-      reponse.category = {"id": reponse.id,"name":array_categories[reponse.categoryId].name};
-      console.table(reponse);
-      console.log("ajouté");
+      reponse.category = {
+        id: reponse.id,
+        name: array_categories[reponse.categoryId].name,
+      };
       close_modale();
       fetch_works();
       return;
-    });
+    })
+    .catch(() => {});
 }
 // fonction pour effacer un work
 function fetch_delete(id) {
@@ -64,10 +63,9 @@ function fetch_delete(id) {
       document.querySelector(".gallery").innerHTML = "";
       document.getElementById("modale_gallery").innerText = "";
       fetch_works();
-      console.log("OK");
-      
       return;
-    });
+    })
+    .catch(() => {});
 }
 // fonction affichage images galerie principale
 function show_images(tab) {
@@ -346,14 +344,17 @@ function modale_start() {
       // envoie la photo en lecture pour affichage à la fonction
       reader.readAsDataURL(btn_Ajouter_photo.files[0]);
       // vérification des 3 conditions pour afficher le bouton valider
+
       test_form_full();
     });
     input_Title.addEventListener("change", () => {
       // vérification des 3 conditions pour afficher le bouton valider
+
       test_form_full();
     });
     select_categories.addEventListener("change", () => {
       // vérification des 3 conditions pour afficher le bouton valider
+
       test_form_full();
     });
 
@@ -363,14 +364,14 @@ function modale_start() {
         input_Title.value != "" &&
         select_categories.value != 0
       ) {
+        
         btn_Valider_Ajouter_photo.style.backgroundColor = "#1d6154";
         btn_Valider_Ajouter_photo.addEventListener("click", () => {
           const form_Ajouter = new FormData();
-
-          form_Ajouter.append("image", btn_Ajouter_photo.files[0]);
-          form_Ajouter.append("title", input_Title.value);
-          form_Ajouter.append("category", select_categories.value);
-          fetch_Ajouter(form_Ajouter);
+        form_Ajouter.append("image", btn_Ajouter_photo.files[0]);
+        form_Ajouter.append("title", input_Title.value);
+        form_Ajouter.append("category", select_categories.value);
+        fetch_Ajouter(form_Ajouter);
         });
       } else {
         btn_Valider_Ajouter_photo.style.backgroundColor = "#a7a7a7";

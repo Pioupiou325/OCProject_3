@@ -605,7 +605,7 @@ button:hover {
   color: #fff;
 }
 #container_arrows {
-  display:inherit;
+  
   position: relative;
   width: 22px;
   height: 22px;
@@ -620,4 +620,5 @@ button:hover {
   right: 3px;
   color: #fff;
 }
+
 

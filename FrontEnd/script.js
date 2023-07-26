@@ -88,12 +88,14 @@ function show_images_modale() {
     const figure = document.createElement("figure");
     const image = document.createElement("img");
     image.src = works[i].imageUrl;
+    image.id = works[i].id;
     const subtitle = document.createElement("p");
     subtitle.innerText = "éditer";
     //   inclut les 2 enfants image+titre dans la div figure
     figure.appendChild(image);
     figure.appendChild(subtitle);
     // création de l icone trash dans un container pour un fond noir
+
     const container_trash = document.createElement("div");
     container_trash.id = "container_trash";
     const trash = document.createElement("i");
@@ -102,16 +104,18 @@ function show_images_modale() {
     trash.id = works[i].id;
     container_trash.appendChild(trash);
     figure.appendChild(container_trash);
-    const container_arrows = document.createElement("div");
-    container_arrows.id = "container_arrows";
-    const arrows = document.createElement("i");
-    arrows.innerHTML = '<i class="fa-solid fa-arrows-up-down-left-right" </i>';
-    arrows.class = "arrows";
-    arrows.id = works[i].id;
-    container_arrows.appendChild(arrows);
-    figure.appendChild(container_arrows);
-    // document.getElementById("container_arrows").style.display = "none";
-    
+    if (i === 0) {
+      const container_arrows = document.createElement("div");
+      container_arrows.id = "container_arrows";
+      const arrows = document.createElement("i");
+      arrows.innerHTML =
+        '<i class="fa-solid fa-arrows-up-down-left-right" </i>';
+      arrows.id = "arrows";
+      arrows.class = "arrows";
+      container_arrows.appendChild(arrows);
+      figure.appendChild(container_arrows);
+    }
+
     //   inclut l' enfant figure dans la div gallery
     document.getElementById("modale_gallery").appendChild(figure);
     // ajoute un eventListener sur chaque trash pour effacer 1 seul  travail à la fois

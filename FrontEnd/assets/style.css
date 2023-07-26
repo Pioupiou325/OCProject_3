@@ -365,11 +365,13 @@ button:hover {
 .footer_login {
   margin-top: 420px;
 }
-.erreur_identifiants {
+
+.erreur_message {
   display: none;
   color: red;
   justify-content: center;
 }
+
 #tester:hover {
   background-color: #247969;
 }
@@ -448,7 +450,6 @@ button:hover {
 #modale_gallery figure {
   height: 150px;
 }
-
 
 #modale_gallery img {
   width: 90%;
@@ -605,7 +606,6 @@ button:hover {
   color: #fff;
 }
 #container_arrows {
-  
   position: relative;
   width: 22px;
   height: 22px;
@@ -620,5 +620,3 @@ button:hover {
   right: 3px;
   color: #fff;
 }
-
-

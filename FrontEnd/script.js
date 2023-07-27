@@ -1,7 +1,12 @@
-let array_categories;
 function fetch_works() {
   fetch("http://localhost:5678/api/works")
-    .then((response) => response.json())
+    .then((response) => {
+      if (!response.ok) {
+        throw response;
+      }
+      return response.json();
+    })
+
     .then((response) => {
       works = response;
       show_images(works);
@@ -12,7 +17,14 @@ function fetch_works() {
 
       return;
     })
-    .catch(() => {});
+    .catch((e) => {
+      if (e.status === 500) {
+        document.querySelector(".erreur_message_modale").innerHTML =
+          "Unexpected Error";
+        document.querySelector(".erreur_message_modale").style.display = "flex";
+        return;
+      }
+    });
   return;
 }
 // fonction pour ajouter un work
@@ -28,7 +40,7 @@ function fetch_Ajouter(form) {
   fetch("http://localhost:5678/api/works/", Data)
     .then(function (reponse) {
       if (!reponse.ok) {
-        throw new Error(error);
+        throw reponse;
       }
       return reponse.json();
     })
@@ -42,7 +54,26 @@ function fetch_Ajouter(form) {
       fetch_works();
       return;
     })
-    .catch(() => {});
+    .catch((e) => {
+      if (e.status === 400) {
+        document.querySelector(".erreur_message_modale").innerHTML =
+          "Bad request";
+        document.querySelector(".erreur_message_modale").style.display = "flex";
+        return;
+      }
+      if (e.status === 401) {
+        document.querySelector(".erreur_message_modale").innerHTML =
+          "!! Utilisateur non connecté !!";
+        document.querySelector(".erreur_message_modale").style.display = "flex";
+        return;
+      }
+      if (e.status === 500) {
+        document.querySelector(".erreur_message_modale").innerHTML =
+          "Unexpected Error";
+        document.querySelector(".erreur_message_modale").style.display = "flex";
+        return;
+      }
+    });
 }
 // fonction pour effacer un work
 function fetch_delete(id) {
@@ -56,7 +87,7 @@ function fetch_delete(id) {
   fetch("http://localhost:5678/api/works/" + id, Data)
     .then(function (reponse) {
       if (!reponse.ok) {
-        throw new Error(error);
+        throw reponse;
       }
     })
     .then(function (reponse) {
@@ -66,7 +97,20 @@ function fetch_delete(id) {
       fetch_works();
       return;
     })
-    .catch(() => {});
+    .catch((e) => {
+      if (e.status === 401) {
+        document.querySelector(".erreur_message_modale").innerHTML =
+          "!! Utilisateur non connecté !!";
+        document.querySelector(".erreur_message_modale").style.display = "flex";
+        return;
+      }
+      if (e.status === 500) {
+        document.querySelector(".erreur_message_modale").innerHTML =
+          "Unexpected Error";
+        document.querySelector(".erreur_message_modale").style.display = "flex";
+        return;
+      }
+    });
 }
 // fonction affichage images galerie principale
 function show_images(tab) {
@@ -170,7 +214,12 @@ function create_boutons_filters() {
   });
   // boucle pour créer les boutons de chaque catégorie
   fetch("http://localhost:5678/api/categories")
-    .then((reponse) => reponse.json())
+    .then((reponse) => {
+      if (!reponse.ok) {
+        throw reponse;
+      }
+      return reponse.json();
+    })
     .then((reponse) => {
       categories = reponse;
       array_categories = reponse;
@@ -196,6 +245,14 @@ function create_boutons_filters() {
           // on affiche le tableau
           show_images(array_works);
         });
+      }
+    })
+    .catch((e) => {
+      if (e.status === 500) {
+        document.querySelector(".erreur_message_modale").innerHTML =
+          "Unexpected Error";
+        document.querySelector(".erreur_message_modale").style.display = "flex";
+        return;
       }
     });
 }

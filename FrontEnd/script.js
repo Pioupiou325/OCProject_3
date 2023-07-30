@@ -181,6 +181,10 @@ function mode_edition() {
   afficher_modifier.addEventListener("click", () => {
     modale_start();
   });
+  bouton_edition_haut.addEventListener("click", () =>
+  {
+    modale_start();
+  })
   document.getElementById("login_ok").addEventListener("click", () => {
     mode_deconnect();
   });

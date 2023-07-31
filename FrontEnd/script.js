@@ -13,7 +13,7 @@ function fetch_works() {
       works = response;
       // lance l' affichage de la galerie:
       show_images(works);
-    return;
+      return;
     })
     .catch((e) => {
       if (e.status === 500) {
@@ -24,6 +24,28 @@ function fetch_works() {
       }
     });
   return;
+}
+// boucle pour créer les boutons de chaque catégorie
+function fetch_categories() {
+  fetch("http://localhost:5678/api/categories")
+    .then((reponse) => {
+      if (!reponse.ok) {
+        throw reponse;
+      }
+      return reponse.json();
+    })
+    .then((reponse) => {
+      array_categories = reponse;
+      create_boutons_filters();
+    })
+    .catch((e) => {
+      if (e.status === 500) {
+        document.querySelector(".erreur_message_modale").innerHTML =
+          "Unexpected Error";
+        document.querySelector(".erreur_message_modale").style.display = "flex";
+        return;
+      }
+    });
 }
 // fonction pour ajouter un work
 function fetch_Ajouter(form) {
@@ -221,49 +243,29 @@ function create_boutons_filters() {
     document.querySelector(".gallery").innerText = "";
     show_images(works);
   });
-  // boucle pour créer les boutons de chaque catégorie
-  fetch("http://localhost:5678/api/categories")
-    .then((reponse) => {
-      if (!reponse.ok) {
-        throw reponse;
+  for (let i = 0; i < array_categories.length; i++) {
+    const btn_filter = document.createElement("button");
+    btn_filter.class = "filters-buttons";
+    btn_filter.id = array_categories[i].name;
+    btn_filter.innerText = array_categories[i].name;
+    filters.appendChild(btn_filter);
+    btn_filter.addEventListener("click", () => {
+      document.querySelector(".gallery").innerText = "";
+      array_works = works;
+      // tri des works par catégorie
+      function filterByCategorie(element) {
+        if (element.category.name === btn_filter.id) {
+          return true;
+        } else {
+          return false;
+        }
       }
-      return reponse.json();
-    })
-    .then((reponse) => {
-      categories = reponse;
-      array_categories = reponse;
-      for (let i = 0; i < array_categories.length; i++) {
-        const btn_filter = document.createElement("button");
-        btn_filter.class = "filters-buttons";
-        btn_filter.id = array_categories[i].name;
-        btn_filter.innerText = array_categories[i].name;
-        filters.appendChild(btn_filter);
-        btn_filter.addEventListener("click", () => {
-          document.querySelector(".gallery").innerText = "";
-          array_works = works;
-          // tri des works par catégorie
-          function filterByCategorie(element) {
-            if (element.category.name === btn_filter.id) {
-              return true;
-            } else {
-              return false;
-            }
-          }
-          // on crée le tableau filtré par Objets
-          array_works = works.filter(filterByCategorie);
-          // on affiche le tableau
-          show_images(array_works);
-        });
-      }
-    })
-    .catch((e) => {
-      if (e.status === 500) {
-        document.querySelector(".erreur_message_modale").innerHTML =
-          "Unexpected Error";
-        document.querySelector(".erreur_message_modale").style.display = "flex";
-        return;
-      }
+      // on crée le tableau filtré par Objets
+      array_works = works.filter(filterByCategorie);
+      // on affiche le tableau
+      show_images(array_works);
     });
+  }
 }
 
 // fonction pour afficher les filtres
@@ -491,8 +493,8 @@ function close_modale() {
 // main à exécuter
 // récupération des travaux
 fetch_works();
-// création des boutons
-create_boutons_filters();
+// récupération des catégories
+fetch_categories();
 // affichage des filtres
 show_filters();
 // si le token existe lancement du mode édition

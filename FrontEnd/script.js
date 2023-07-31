@@ -45,13 +45,15 @@ function fetch_Ajouter(form) {
       return reponse.json();
     })
     .then(function (reponse) {
-      reponse;
-      reponse.category = {
-        id: reponse.id,
-        name: array_categories[reponse.categoryId - 1].name,
-      };
+      for (i = 0; i < array_categories.length; i++) {
+        if (reponse.categoryId == array_categories[i].id) {
+          reponse.category = {
+            id: reponse.id,
+            name: array_categories[i].name,
+          };
+        }
+      }
       close_modale();
-      // fetch_works();
       works.push(reponse);
       show_images(works);
       return;
@@ -97,7 +99,7 @@ function fetch_delete(id) {
       document.querySelector(".gallery").innerHTML = "";
       document.getElementById("modale_gallery").innerText = "";
 
-      let new_works = works.filter(work => work.id != id);
+      let new_works = works.filter((work) => work.id != id);
       works = new_works;
       show_images(works);
       show_images_modale();
@@ -187,10 +189,9 @@ function mode_edition() {
   afficher_modifier.addEventListener("click", () => {
     modale_start();
   });
-  bouton_edition_haut.addEventListener("click", () =>
-  {
+  bouton_edition_haut.addEventListener("click", () => {
     modale_start();
-  })
+  });
   document.getElementById("login_ok").addEventListener("click", () => {
     mode_deconnect();
   });
@@ -448,16 +449,14 @@ function modale_start() {
     let ajouter_valid = false;
     btn_Valider_Ajouter_photo.addEventListener("click", () => {
       ajouter_valid = true;
-      test_form_full()
-     }
-    );
+      test_form_full();
+    });
 
     function test_form_full() {
       if (
         btn_Ajouter_photo.value != "" &&
         input_Title.value != "" &&
-        select_categories.value != 0 
-        
+        select_categories.value != 0
       ) {
         btn_Valider_Ajouter_photo.style.backgroundColor = "#1d6154";
         if (ajouter_valid === true) {
@@ -467,7 +466,6 @@ function modale_start() {
           form_Ajouter.append("category", select_categories.value);
           fetch_Ajouter(form_Ajouter);
         }
-        
       } else {
         if (ajouter_valid === true) {
           error_modale_ajout.innerHTML = "Tous les champs sont obligatoires";
@@ -475,7 +473,6 @@ function modale_start() {
         }
         ajouter_valid = false;
         btn_Valider_Ajouter_photo.style.backgroundColor = "#a7a7a7";
-
       }
     }
     modale_croix_close.addEventListener("click", () => {

@@ -1,3 +1,6 @@
+let works;
+let array_categories;
+let array_works;
 function fetch_works() {
   fetch("http://localhost:5678/api/works")
     .then((response) => {
@@ -6,16 +9,11 @@ function fetch_works() {
       }
       return response.json();
     })
-
     .then((response) => {
       works = response;
+      // lance l' affichage de la galerie:
       show_images(works);
-
-      if (document.getElementById("modale_gallery")) {
-        modale_start();
-      }
-
-      return;
+    return;
     })
     .catch((e) => {
       if (e.status === 500) {
@@ -432,17 +430,17 @@ function modale_start() {
       // envoie la photo en lecture pour affichage à la fonction
       reader.readAsDataURL(btn_Ajouter_photo.files[0]);
       // vérification des 3 conditions pour afficher le bouton valider
-
+      error_modale_ajout.style.display = "none";
       test_form_full();
     });
     input_Title.addEventListener("change", () => {
       // vérification des 3 conditions pour afficher le bouton valider
-
+      error_modale_ajout.style.display = "none";
       test_form_full();
     });
     select_categories.addEventListener("change", () => {
       // vérification des 3 conditions pour afficher le bouton valider
-
+      error_modale_ajout.style.display = "none";
       test_form_full();
     });
 

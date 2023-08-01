@@ -331,6 +331,7 @@ footer nav ul {
 }
 .afficher_noeffect {
   display: flex;
+  width:100px;
   position: relative;
   display: none;
   gap: 10px;
@@ -617,6 +618,7 @@ button:hover {
   color: #fff;
 }
 #container_arrows {
+  display:none;
   position: relative;
   width: 22px;
   height: 22px;

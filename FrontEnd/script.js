@@ -176,7 +176,7 @@ function show_images_modale() {
     trash.id = works[i].id;
     container_trash.appendChild(trash);
     figure.appendChild(container_trash);
-    if (i === 0) {
+    // création pour le arrows au hover
       const container_arrows = document.createElement("div");
       container_arrows.id = "container_arrows";
       const arrows = document.createElement("i");
@@ -185,8 +185,15 @@ function show_images_modale() {
       arrows.id = "arrows";
       arrows.class = "arrows";
       container_arrows.appendChild(arrows);
-      figure.appendChild(container_arrows);
-    }
+    figure.appendChild(container_arrows);
+    
+    figure.addEventListener("mouseover", () => {      
+      container_arrows.style.display = "block";
+    })
+    figure.addEventListener("mouseleave", () => {      
+      container_arrows.style.display = "none";
+    })
+    
 
     //   inclut l' enfant figure dans la div gallery
     document.getElementById("modale_gallery").appendChild(figure);

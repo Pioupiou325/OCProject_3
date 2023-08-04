@@ -177,23 +177,21 @@ function show_images_modale() {
     container_trash.appendChild(trash);
     figure.appendChild(container_trash);
     // création pour le arrows au hover
-      const container_arrows = document.createElement("div");
-      container_arrows.id = "container_arrows";
-      const arrows = document.createElement("i");
-      arrows.innerHTML =
-        '<i class="fa-solid fa-arrows-up-down-left-right" </i>';
-      arrows.id = "arrows";
-      arrows.class = "arrows";
-      container_arrows.appendChild(arrows);
+    const container_arrows = document.createElement("div");
+    container_arrows.id = "container_arrows";
+    const arrows = document.createElement("i");
+    arrows.innerHTML = '<i class="fa-solid fa-arrows-up-down-left-right" </i>';
+    arrows.id = "arrows";
+    arrows.class = "arrows";
+    container_arrows.appendChild(arrows);
     figure.appendChild(container_arrows);
-    
-    figure.addEventListener("mouseover", () => {      
+
+    figure.addEventListener("mouseover", () => {
       container_arrows.style.display = "block";
-    })
-    figure.addEventListener("mouseleave", () => {      
+    });
+    figure.addEventListener("mouseleave", () => {
       container_arrows.style.display = "none";
-    })
-    
+    });
 
     //   inclut l' enfant figure dans la div gallery
     document.getElementById("modale_gallery").appendChild(figure);
@@ -247,6 +245,7 @@ function create_boutons_filters() {
   tous.innerText = "Tous";
   filters.appendChild(tous);
   tous.addEventListener("click", () => {
+    
     document.querySelector(".gallery").innerText = "";
     show_images(works);
   });
@@ -256,11 +255,18 @@ function create_boutons_filters() {
     btn_filter.id = array_categories[i].name;
     btn_filter.innerText = array_categories[i].name;
     filters.appendChild(btn_filter);
+    tous.focus();
+   
+    tous.style.outlineColor = "#FFF";
+
+    
     btn_filter.addEventListener("click", () => {
       document.querySelector(".gallery").innerText = "";
       array_works = works;
       // tri des works par catégorie
       function filterByCategorie(element) {
+        
+
         if (element.category.name === btn_filter.id) {
           return true;
         } else {
